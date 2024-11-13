@@ -1,0 +1,29 @@
+{
+	"id": "SpectrumFramework",
+	"name": "Spectrum Framework",
+	"display_name": "Spectrum Framework",
+	"author": ["wingedcatgirl"],
+	"description": "Adds Spectrum and related hand parts, for use with mods that add custom suits.",
+	"prefix": "spectrum",
+	"main_file": "spectrumframework.lua",
+	"priority": 36,
+	"badge_colour": "CA7CA7",
+	"badge_text_colour": "FFFFFF",
+	"version": "0.0.0",
+	"dependencies": [
+		{
+			"id": "Steamodded",
+			"min_version": "1.0.0~ALPHA-1030e"
+		}
+	],
+    "conflicts": [
+		{
+			"id": "Bunco",
+			"min_version": "5.0"
+		},
+		{
+			"id": "SixSuits",
+			"min_version": "1.0.3"
+		}
+	],
+}

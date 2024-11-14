@@ -5,7 +5,8 @@ Does _not_ add any additional suits of its own. If you install this mod by itsel
 
 Probably don't use this with mods that already add Spectrum hands! I don't know what will happen if you do that! I'd put them in the .json as conflicts but that stops them from even being installed, including if you turn them off, which seems weird and inconvenient.
 
-## Things planned to definitely do:
+## Things done:
+- The hands
 - Planets for the hands
 
 ## Things planned to probably do

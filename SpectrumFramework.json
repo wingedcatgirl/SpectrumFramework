@@ -9,21 +9,11 @@
 	"priority": 36,
 	"badge_colour": "CA7CA7",
 	"badge_text_colour": "FFFFFF",
-	"version": "0.0.0",
+	"version": "0.0.5",
 	"dependencies": [
 		{
 			"id": "Steamodded",
 			"min_version": "1.0.0~ALPHA-1030e"
-		}
-	],
-    "conflicts": [
-		{
-			"id": "Bunco",
-			"min_version": "5.0"
-		},
-		{
-			"id": "SixSuits",
-			"min_version": "1.0.3"
 		}
 	],
 }

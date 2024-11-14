@@ -44,7 +44,7 @@ SMODS.PokerHandPart{ -- Spectrum base
 
 SMODS.PokerHand{ -- Spectrum
     key = 'Spectrum',
-    visible = true,
+    visible = false,
     chips = 50,
     mult = 6,
     l_chips = 25,
@@ -67,7 +67,7 @@ SMODS.PokerHand{ -- Spectrum
 
 SMODS.PokerHand{ -- Straight Spectrum
     key = 'Straight Spectrum',
-    visible = true,
+    visible = false,
     chips = 120,
     mult = 10,
     l_chips = 35,
@@ -108,7 +108,7 @@ SMODS.PokerHand{ -- Straight Spectrum
 SMODS.PokerHand{ -- Spectrum House
     key = 'Spectrum House',
     above_hand = 'Flush House',
-    visible = true,
+    visible = false,
     chips = 150,
     mult = 15,
     l_chips = 50,
@@ -134,7 +134,7 @@ SMODS.PokerHand{ -- Spectrum House
 SMODS.PokerHand{ -- Spectrum Five
     key = 'Spectrum Five',
     above_hand = 'Flush Five',
-    visible = true,
+    visible = false,
     chips = 180,
     mult = 18,
     l_chips = 60,
@@ -158,7 +158,7 @@ SMODS.PokerHand{ -- Spectrum Five
 }
 
 
---NFS.load(SMODS.current_mod.path .. 'planets.lua')()
+NFS.load(SMODS.current_mod.path .. 'planets.lua')()
 --NFS.load(SMODS.current_mod.path .. 'jokers.lua')()
 
 SMODS.Atlas {

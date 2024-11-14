@@ -19,7 +19,7 @@ SMODS.Joker {
     blueprint_compat = true,
     config =  { extra = {Xmult = 2.5, type = 'spectrum_Spectrum'}},
     loc_txt = {
-        name = "",
+        name = "The Rainbow",
         text = {"{X:mult,C:white} X#1# {} Mult if played",
                 "hand contains",
                 "a {C:attention}#2#"}

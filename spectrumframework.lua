@@ -54,7 +54,7 @@ SMODS.PokerHand{ -- Spectrum
         { 'D_7',    true },
         { 'C_3', true },
         { 'spectrum_fakewild_5', true },
-        { 'D_K',    true },
+        { 'H_K',    true },
     },
     loc_txt =  	{
         name = 'Spectrum',
@@ -201,8 +201,8 @@ SMODS.Suit{ -- Fake wild card for the demonstration
     loc_txt = 
          {
             ['en-us'] = {
-                singular = 'any other suit',
-                plural = 'any other suits',
+                singular = 'fake wild',
+                plural = 'fake wilds',
          }
     },
 

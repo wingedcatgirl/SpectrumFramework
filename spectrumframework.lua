@@ -5,6 +5,37 @@ SMODS.Atlas {
     py = 95
 }
 
+local spectrum_config = SMODS.current_mod.config
+
+SMODS.current_mod.config_tab = function()
+    return {n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tl", padding = 0.2, colour = G.C.BLACK}, nodes = {
+        {n = G.UIT.C, config = {minw=1, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15}, nodes = {
+        create_toggle({
+            label = "Spectra are standard",
+            ref_table = spectrum_config,
+            ref_value = 'spectra_are_standard',
+        }),
+        {n = G.UIT.T, config = {colour = G.C.WHITE, padding = 0, text = "Check this if you have\n*many* custom suit mods\nand expect Spectra to be\neasy to score regardless\nof starting deck.\n\nSpectrum hands will be visible\nin Run Info from the start\nand have lower score values.", scale = 0.3}},
+        }}
+    }}
+end
+
+
+easy_spectra = function()
+    if spectrum_config.spectra_are_standard then 
+        sendDebugMessage('[Spectrum Framework] Easy Spectra config option checked')
+        return true
+    end
+    if G.GAME.starting_params.easy_spectra then 
+        sendDebugMessage('[Spectrum Framework] Deck defines Spectra as easy')
+        return true 
+    end
+        -- count suits in starting deck here, probably
+
+
+    sendDebugMessage('[Spectrum Framework] Nothing detected')
+    return false
+end
 
 --Code copied from Bunco, which referenced it from SixSuits.
 
@@ -156,6 +187,44 @@ SMODS.PokerHand{ -- Spectrum Five
         return {SMODS.merge_lists (parts._5, parts.spectrum_spectrum)}
     end
 }
+
+local GameStartRef = Game.start_run
+function Game:start_run(args)
+    GameStartRef(self, args)
+
+    if easy_spectra() and not args.savetext then
+        sendDebugMessage('[Spectrum Framework] Lowering hand values')
+        G.GAME.hands["spectrum_Spectrum"].visible = true
+        G.GAME.hands["spectrum_Spectrum"].mult = 3
+        G.GAME.hands["spectrum_Spectrum"].chips = 20
+        G.GAME.hands["spectrum_Spectrum"].l_mult = 3
+        G.GAME.hands["spectrum_Spectrum"].l_chips = 15
+
+        G.GAME.hands["spectrum_Straight Spectrum"].visible = true
+        G.GAME.hands["spectrum_Straight Spectrum"].mult = 6
+        G.GAME.hands["spectrum_Straight Spectrum"].chips = 60
+        G.GAME.hands["spectrum_Straight Spectrum"].l_mult = 2
+        G.GAME.hands["spectrum_Straight Spectrum"].l_chips = 35
+
+        G.GAME.hands["spectrum_Spectrum House"].visible = true
+        G.GAME.hands["spectrum_Spectrum House"].mult = 7
+        G.GAME.hands["spectrum_Spectrum House"].chips = 80
+        G.GAME.hands["spectrum_Spectrum House"].l_mult = 4
+        G.GAME.hands["spectrum_Spectrum House"].l_chips = 35
+
+        G.GAME.hands["spectrum_Spectrum Five"].visible = true
+        G.GAME.hands["spectrum_Spectrum Five"].mult = 14
+        G.GAME.hands["spectrum_Spectrum Five"].chips = 120
+        G.GAME.hands["spectrum_Spectrum Five"].l_mult = 3
+        G.GAME.hands["spectrum_Spectrum Five"].l_chips = 40
+    else
+        if args.savetext then
+            sendDebugMessage('[Spectrum Framework] Restoring saved run, hand values not modified')
+        else
+            sendDebugMessage('[Spectrum Framework] Hand values have not been modified for new run')
+        end
+    end
+end
 
 
 NFS.load(SMODS.current_mod.path .. 'planets.lua')()

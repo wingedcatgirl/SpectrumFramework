@@ -1,6 +1,7 @@
 --[[
-   Checking specifically for _partial_ conflicts. 
-   Any mod which implements _all_ of these should be added as a conflict to the .json file.
+    (Not using this at the moment, but if we do...)  
+    This checks specifically for _partial_ conflicts. 
+    Any mod which implements _all_ of these should be added as a conflict to the .json file.
   ]]
 
 if !( --Mods that implement the Spectrum hand

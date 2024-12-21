@@ -11,9 +11,6 @@
 	"badge_text_colour": "FFFFFF",
 	"version": "0.0.5",
 	"dependencies": [
-		{
-			"id": "Steamodded",
-			"min_version": "1.0.0~ALPHA-1030e"
-		}
+			"Steamodded(>=1.0.0~ALPHA-1204a)"
 	],
 }

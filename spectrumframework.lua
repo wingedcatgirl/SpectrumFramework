@@ -311,8 +311,22 @@ SMODS.Suit{ -- Fake wild card for the demonstration
     end
 }
 
+
+SMODS.Joker:take_ownership('smeared',
+    { name = "Smeared Joker Fixed" }, --use modded smearing logic
+    true 
+)
+
 local issuitref = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
+    if next(find_joker('Smeared Joker Fixed')) then
+        if (self.base.suit == 'Hearts' or self.base.suit == 'Diamonds') and (suit == 'Hearts' or suit == 'Diamonds') then
+        return true
+        end
+        if (self.base.suit == 'Spades' or self.base.suit == 'Clubs') and (suit == 'Spades' or suit == 'Clubs') then
+        return true
+        end
+    end
     if suit == "spectrum_fakewild" and self.base.suit ~= "spectrum_fakewild" then
         return false
     elseif self.base.suit == "spectrum_fakewild" then

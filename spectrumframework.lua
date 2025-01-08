@@ -23,19 +23,77 @@ end
 
 easy_spectra = function()
     if spectrum_config.spectra_are_standard then 
-        sendDebugMessage('[Spectrum Framework] Easy Spectra config option checked')
+        --sendDebugMessage('[Spectrum Framework] Easy Spectra config option checked')
         return true
     end
     if G.GAME.starting_params.easy_spectra then 
-        sendDebugMessage('[Spectrum Framework] Deck defines Spectra as easy')
+        --sendDebugMessage('[Spectrum Framework] Deck defines Spectra as easy')
         return true 
     end
-        -- count suits in starting deck here, probably
-
-
-    sendDebugMessage('[Spectrum Framework] Nothing detected')
+    if G.GAME.starting_params.diverse_deck == nil then
+        suit_diversity()
+    end
+    if G.GAME.starting_params.diverse_deck then
+        --sendDebugMessage('[Spectrum Framework] Deck detected as diverse.')
+    end
+    --sendDebugMessage('[Spectrum Framework] Nothing detected')
     return false
 end
+
+function suit_diversity()
+    if G.GAME.starting_params.diverse_deck ~= nil then
+        --sendDebugMessage('Deck diversity already determined')
+        return G.GAME.starting_params.diverse_deck
+    end
+    local suit_counts = {}
+    local wild_count = 0
+    local stone_count = 0
+    local total_count = #G.playing_cards
+
+    for k, card in pairs(G.playing_cards) do
+        if card.ability.name == 'Wild Card' then 
+            wild_count = wild_count + 1
+            if wild_count == 1 then
+                --sendDebugMessage('[Spectrum Framework] Deck contains at least 1 Wild Card')
+            end
+        elseif card.ability.name == 'Stone Card' then
+            stone_count = stone_count +1
+            if stone_count == 1 then
+                --sendDebugMessage('[Spectrum Framework] Deck contains at least 1 Stone Card')
+            end
+        else
+            local suit = card.base.suit
+            suit_counts[suit] = (suit_counts[suit] or 0) + 1
+        end
+    end
+
+    local suit_diversity_met = true
+    local available_suits = 0
+    local available_factor = 1/8
+    local domination_factor = 1/3
+    for suit, count in pairs(suit_counts) do
+        local thispercentage = (count+wild_count) / total_count
+        local notthispercentage = (total_count - (count+stone_count)) / total_count
+        if thispercentage > available_factor then
+            available_suits = available_suits + 1
+            --sendDebugMessage('[Spectrum Framework] '..suit..' contains '..count..' cards, counts as available')
+        end
+        if notthispercentage < domination_factor then
+            suit_diversity_met = false
+            --sendDebugMessage('[Spectrum Framework] '..suit..' contains '..count..' cards, deck is '..suit..'-dominated')
+        end        
+    end
+    --sendDebugMessage('[Spectrum Framework] Deck contains '..available_suits..' available suits.')
+    if available_suits < 5 then
+        suit_diversity_met = false
+        --sendDebugMessage('[Spectrum Framework] Deck is not suit diverse.')
+    else
+        --sendDebugMessage('[Spectrum Framework] Deck is suit diverse.')
+    end
+    G.GAME.starting_params.diverse_deck = suit_diversity_met
+    return G.GAME.starting_params.diverse_deck
+end
+
 
 --Code copied from Bunco, which referenced it from SixSuits.
 
@@ -87,10 +145,6 @@ SMODS.PokerHand{ -- Spectrum
         { 'spectrum_fakewild_5', true },
         { 'H_K',    true },
     },
-    loc_txt =  	{
-        name = 'Spectrum',
-        description = { '5 cards with different suits' },
-    },
     evaluate = function(parts)
         return parts.spectrum_spectrum
     end
@@ -109,12 +163,6 @@ SMODS.PokerHand{ -- Straight Spectrum
         { 'C_T',    true },
         { 'D_9', true },
         { 'H_8',    true }
-    },
-    loc_txt =  	{
-        name = 'Straight Spectrum',
-        extra = 'Royal Spectrum',
-        description = { '5 cards in a row (consecutive ranks),',
-                        'each with a different suit' },
     },
     process_loc_text = function(self)
         SMODS.PokerHand.process_loc_text(self)
@@ -151,11 +199,6 @@ SMODS.PokerHand{ -- Spectrum House
         { 'D_8',    true },
         { 'H_8',    true }
     },
-    loc_txt =  	{
-        name = 'Spectrum House',
-        description = { 'A Three of a Kind and a Pair with',
-                        'each card having a different suit' },
-    },
     evaluate = function(parts)
         if #parts._3 < 1 or #parts._2 < 2 or not next(parts.spectrum_spectrum) then return {} end
         return {SMODS.merge_lists (parts._all_pairs, parts.spectrum_spectrum)}
@@ -177,11 +220,6 @@ SMODS.PokerHand{ -- Spectrum Five
         { 'H_7',    true },
         { 'C_7',    true }
     },
-    loc_txt =  	{
-        name = 'Spectrum Five',
-        description = { '5 cards with the same rank,',
-                        'each with a different suit' },
-        }, 
     evaluate = function(parts)
         if not next(parts._5) or not next(parts.spectrum_spectrum) then return {} end
         return {SMODS.merge_lists (parts._5, parts.spectrum_spectrum)}
@@ -193,7 +231,7 @@ function Game:start_run(args)
     GameStartRef(self, args)
 
     if easy_spectra() and not args.savetext then
-        sendDebugMessage('[Spectrum Framework] Lowering hand values')
+        --sendDebugMessage('[Spectrum Framework] Lowering hand values')
         G.GAME.hands["spectrum_Spectrum"].visible = true
         G.GAME.hands["spectrum_Spectrum"].mult = 3
         G.GAME.hands["spectrum_Spectrum"].chips = 20
@@ -219,16 +257,16 @@ function Game:start_run(args)
         G.GAME.hands["spectrum_Spectrum Five"].l_chips = 40
     else
         if args.savetext then
-            sendDebugMessage('[Spectrum Framework] Restoring saved run, hand values not modified')
+            --sendDebugMessage('[Spectrum Framework] Restoring saved run, hand values not modified')
         else
-            sendDebugMessage('[Spectrum Framework] Hand values have not been modified for new run')
+            --sendDebugMessage('[Spectrum Framework] Hand values have not been modified for new run')
         end
     end
 end
 
 
 NFS.load(SMODS.current_mod.path .. 'planets.lua')()
---NFS.load(SMODS.current_mod.path .. 'jokers.lua')()
+NFS.load(SMODS.current_mod.path .. 'jokers.lua')()
 
 SMODS.Atlas {
     key = 'fakewild_lc',
@@ -267,13 +305,6 @@ SMODS.Suit{ -- Fake wild card for the demonstration
     lc_colour = HEX('86B723'),
     hc_colour = HEX('86B723'),
 
-    loc_txt = 
-         {
-            ['en-us'] = {
-                singular = 'fake wild',
-                plural = 'fake wilds',
-         }
-    },
 
     in_pool = function(self, args)
         return false

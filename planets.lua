@@ -1,3 +1,5 @@
+-- LOCALIZATION NOTE: idk how it works (the relevant code is pulled from Cryptid) but all of these just modify Mercury instead of having their own text.
+
 SMODS.Consumable{ -- Rainbow Planet
     set = 'Planet',
     cost = 3,
@@ -14,8 +16,7 @@ SMODS.Consumable{ -- Rainbow Planet
         SMODS.Consumable.process_loc_text(self)
         G.localization.descriptions[self.set][self.key].text = target_text
     end,
-    loc_txt = 
-    {
+    loc_txt = {
         ['en-us'] = {
             ['name'] = 'Rainbow Planet'
         },
@@ -44,8 +45,7 @@ SMODS.Consumable{ -- House Planet
         SMODS.Consumable.process_loc_text(self)
         G.localization.descriptions[self.set][self.key].text = target_text
     end,
-    loc_txt = 
-    {
+    loc_txt = {
         ['en-us'] = {
             ['name'] = 'House Planet'
         },
@@ -74,8 +74,7 @@ SMODS.Consumable{ -- Line Planet
         SMODS.Consumable.process_loc_text(self)
         G.localization.descriptions[self.set][self.key].text = target_text
     end,
-    loc_txt = 
-    {
+    loc_txt = {
         ['en-us'] = {
             ['name'] = 'Line Planet'
         },
@@ -104,8 +103,7 @@ SMODS.Consumable{ -- Planet Cluster
         SMODS.Consumable.process_loc_text(self)
         G.localization.descriptions[self.set][self.key].text = target_text
     end,
-    loc_txt = 
-    {
+    loc_txt = {
         ['en-us'] = {
             ['name'] = 'Planet Cluster'
         },

@@ -115,7 +115,7 @@ SMODS.PokerHandPart{ -- Spectrum base
             end
         end
         for i = 1, #hand do
-            if hand[i].ability.name == 'Wild Card' then
+            if hand[i].ability.name == 'Wild Card' or hand[i].base.suit == "spectrum_fakewild" then
                 for k, v in pairs(suits) do
                     if hand[i]:is_suit(k, nil, true) and v == 0 then
                         suits[k] = v + 1; break
@@ -310,3 +310,13 @@ SMODS.Suit{ -- Fake wild card for the demonstration
         return false
     end
 }
+
+local issuitref = Card.is_suit
+function Card:is_suit(suit, bypass_debuff, flush_calc)
+    if suit == "spectrum_fakewild" and self.base.suit ~= "spectrum_fakewild" then
+        return false
+    elseif self.base.suit == "spectrum_fakewild" then
+        return true
+    end
+    return issuitref(self, suit, bypass_debuff, flush_calc)
+end

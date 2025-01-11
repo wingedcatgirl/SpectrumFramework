@@ -16,14 +16,12 @@ If your mod does anything with Smeared Joker, be aware that [we've changed its i
 ## Things planned to probably do
 - Fix the suit-counting thing
 
-## Things planned to possibly maybe do
-- Art for the planets which isn't a hilariously blatant placeholder
-
 ## Warning
 Disabling Spectrum Framework mid-run will probably crash your game. Generally speaking, you should start a new run when your mod loadout changes in any way.
 
 ## Attribution
-A lot of this code came from [Bunco](https://github.com/Firch/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).
+- A lot of this code came from [Bunco](https://github.com/Firch/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).
+- Joker and planet art [by CupertinoEffect](https://github.com/wingedcatgirl/SpectrumFramework/issues/1)
 
 ## Conflicts
 Will not load alongside the following mods, as they implement Spectrum themself so it would be redundant:

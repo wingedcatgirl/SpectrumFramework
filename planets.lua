@@ -1,13 +1,20 @@
 -- LOCALIZATION NOTE: idk how it works (the relevant code is pulled from Cryptid) but all of these just modify Mercury instead of having their own text.
 
-SMODS.Consumable{ -- Rainbow Planet
+SMODS.Atlas {
+    key = 'spectrumplanets',
+    path = "planets.png",
+    px = 71,
+    py = 95
+}
+
+SMODS.Consumable{ -- Vulcan/Rainbow Planet
     set = 'Planet',
     cost = 3,
     unlocked = true,
     discovered = true,
-    atlas = 'spectrumplaceholders',
-    key = 'RainbowPlanet',
-    name = "Rainbow Planet",
+    atlas = 'spectrumplanets',
+    key = 'Vulcan',
+    name = "Vulcan",
     effect = 'Hand Upgrade',
     config = {hand_type = 'spectrum_Spectrum', softlock = true},
     process_loc_text = function(self)
@@ -18,25 +25,24 @@ SMODS.Consumable{ -- Rainbow Planet
     end,
     loc_txt = {
         ['en-us'] = {
-            ['name'] = 'Rainbow Planet'
+            ['name'] = 'Vulcan'
         },
     },
     set_card_type_badge = function(self, card, badges)
-        badges[1] = create_badge("Planet???", get_type_colour(self or card.config, card), nil, 1.2)
+        badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
     end,
     generate_ui = 0,
-    pos = {x=0, y=2},
-    soul_pos = {x=1, y=2},
+    pos = {x=0, y=0},
 }
 
-SMODS.Consumable{ -- House Planet
+SMODS.Consumable{ -- Nibiru/House Planet
     set = 'Planet',
     cost = 3,
     unlocked = true,
     discovered = true,
-    atlas = 'spectrumplaceholders',
-    key = 'HousePlanet',
-    name = "House Planet",
+    atlas = 'spectrumplanets',
+    key = 'Nibiru',
+    name = "Nibiru",
     effect = 'Hand Upgrade',
     config = {hand_type = 'spectrum_Spectrum House', softlock = true},
     process_loc_text = function(self)
@@ -47,25 +53,24 @@ SMODS.Consumable{ -- House Planet
     end,
     loc_txt = {
         ['en-us'] = {
-            ['name'] = 'House Planet'
+            ['name'] = 'Nibiru'
         },
     },
     set_card_type_badge = function(self, card, badges)
-        badges[1] = create_badge("Planet???", get_type_colour(self or card.config, card), nil, 1.2)
+        badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
     end,
     generate_ui = 0,
-    pos = {x=0, y=2},
-    soul_pos = {x=2, y=2},
+    pos = {x=2, y=0},
 }
 
-SMODS.Consumable{ -- Line Planet
+SMODS.Consumable{ -- Phaeton/Line Planet
     set = 'Planet',
     cost = 3,
     unlocked = true,
     discovered = true,
-    atlas = 'spectrumplaceholders',
-    key = 'LinePlanet',
-    name = "Line Planet",
+    atlas = 'spectrumplanets',
+    key = 'Phaeton',
+    name = "Phaeton",
     effect = 'Hand Upgrade',
     config = {hand_type = 'spectrum_Straight Spectrum', softlock = true},
     process_loc_text = function(self)
@@ -76,25 +81,24 @@ SMODS.Consumable{ -- Line Planet
     end,
     loc_txt = {
         ['en-us'] = {
-            ['name'] = 'Line Planet'
+            ['name'] = 'Phaeton'
         },
     },
     set_card_type_badge = function(self, card, badges)
-        badges[1] = create_badge("Planet???", get_type_colour(self or card.config, card), nil, 1.2)
+        badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
     end,
     generate_ui = 0,
-    pos = {x=0, y=2},
-    soul_pos = {x=3, y=2},
+    pos = {x=1, y=0},
 }
 
-SMODS.Consumable{ -- Planet Cluster
+SMODS.Consumable{ -- Yuggoth/Planet Cluster
     set = 'Planet',
     cost = 3,
     unlocked = true,
     discovered = true,
-    atlas = 'spectrumplaceholders',
-    key = 'PlanetCluster',
-    name = "Planet Cluster",
+    atlas = 'spectrumplanets',
+    key = 'Yuggoth',
+    name = "Yuggoth",
     effect = 'Hand Upgrade',
     config = {hand_type = 'spectrum_Spectrum Five', softlock = true},
     process_loc_text = function(self)
@@ -105,13 +109,12 @@ SMODS.Consumable{ -- Planet Cluster
     end,
     loc_txt = {
         ['en-us'] = {
-            ['name'] = 'Planet Cluster'
+            ['name'] = 'Yuggoth'
         },
     },
     set_card_type_badge = function(self, card, badges)
-        badges[1] = create_badge("Planets???", get_type_colour(self or card.config, card), nil, 1.2)
+        badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
     end,
     generate_ui = 0,
-    pos = {x=0, y=2},
-    soul_pos = {x=4, y=2},
+    pos = {x=3, y=0},
 }

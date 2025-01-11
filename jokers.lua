@@ -1,13 +1,16 @@
+SMODS.Atlas {
+    key = 'spectrumjokers',
+    path = "jokers.png",
+    px = 71,
+    py = 95
+}
+
 SMODS.Joker {
     key = "pensive",
     name = "Pensive Joker",
-    atlas = 'spectrumplaceholders',
+    atlas = 'spectrumjokers',
     pos = {
-        x = 0,
-        y = 0
-    },
-    soul_pos = {
-        x = 2,
+        x = 1,
         y = 0
     },
     rarity = 1,
@@ -40,13 +43,9 @@ SMODS.Joker {
 SMODS.Joker {
     key = "giggly",
     name = "Giggly Joker",
-    atlas = 'spectrumplaceholders',
+    atlas = 'spectrumjokers',
     pos = {
         x = 0,
-        y = 0
-    },
-    soul_pos = {
-        x = 1,
         y = 0
     },
     rarity = 1,
@@ -79,13 +78,9 @@ SMODS.Joker {
 SMODS.Joker {
     key = "rainbow",
     name = "The Rainbow",
-    atlas = 'spectrumplaceholders',
+    atlas = 'spectrumjokers',
     pos = {
-        x = 0,
-        y = 0
-    },
-    soul_pos = {
-        x = 3,
+        x = 2,
         y = 0
     },
     rarity = 3,

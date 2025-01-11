@@ -16,6 +16,9 @@ If your mod does anything with Smeared Joker, be aware that [we've changed its i
 ## Things planned to probably do
 - Fix the suit-counting thing
 
+## Things planned to possibly do
+- Config option to switch between joker and planet versions (in case anyone really prefers a specific one)
+
 ## Warning
 Disabling Spectrum Framework mid-run will probably crash your game. Generally speaking, you should start a new run when your mod loadout changes in any way.
 

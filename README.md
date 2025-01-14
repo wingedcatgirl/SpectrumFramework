@@ -29,7 +29,6 @@ Disabling Spectrum Framework mid-run will probably crash your game. Generally sp
 ## Conflicts
 Will not load alongside the following mods, as they implement Spectrum themself so it would be redundant:
 - Bunco
-- Six Suits
 
 
 [^1]: Okay technically it adds a fake wild suit to demonstrate the Spectrum hands. But you shouldn't actually see that in gameplay.

@@ -26,9 +26,11 @@ Disabling Spectrum Framework mid-run will probably crash your game. Generally sp
 - A lot of this code came from [Bunco](https://github.com/Firch/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).
 - Joker and planet art [by CupertinoEffect](https://github.com/wingedcatgirl/SpectrumFramework/issues/1)
 
-## Conflicts
+## Compatibility
 Will not load alongside the following mods, as they implement Spectrum themself so it would be redundant:
 - Bunco
+
+The following mods implement Spectrum themself but ensure non-redundancy on their end:
 - Six Suits
 
 

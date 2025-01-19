@@ -11,7 +11,7 @@ SMODS.current_mod.config_tab = function()
     return {
         n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tl", padding = 0.2, colour = G.C.BLACK}, 
         nodes = {
-                    {n = G.UIT.C, config = {minw=1, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
+                    {n = G.UIT.C, config = {minw=0.5, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
                     nodes = {
                         create_toggle({
                             label = "Spectra are standard",
@@ -21,7 +21,7 @@ SMODS.current_mod.config_tab = function()
                         {n = G.UIT.T, config = {colour = G.C.WHITE, padding = 0, text = "Check this if you have\n*many* custom suit mods\nand expect Spectra to be\neasy to score regardless\nof starting deck.\n\nSpectrum hands will be visible\nin Run Info from the start\nand have lower score values.", scale = 0.3}},
                             }
                     },
-                    {n = G.UIT.C, config = {minw=1, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
+                    {n = G.UIT.C, config = {minw=0.5, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
                     nodes = {
                         create_toggle({
                             label = "Smear modded suits",
@@ -342,10 +342,12 @@ SMODS.Joker:take_ownership('smeared',{
 
 local issuitref = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
-    if self.ability.name == 'Stone Card' then --TODO: find a more general way of checking for suitlessness
+    if SMODS.has_no_suit(self) then 
+        --sendDebugMessage('Card has no suit')
         return false
     end
-    if self.ability.name == 'Wild Card' or self.base.suit == "spectrum_fakewild" then --TODO: find a more general way of checking for wildness
+    if SMODS.has_any_suit(self) or self.base.suit == "spectrum_fakewild" then
+        --sendDebugMessage('Card is wild')
         return true
     end
     if suit == "spectrum_fakewild" and self.base.suit ~= "spectrum_fakewild" then

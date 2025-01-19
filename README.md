@@ -3,7 +3,7 @@ A mod for Balatro that adds Spectrum hands (five cards, each of a different suit
 
 Does _not_ add any additional suits of its own.[^1] If you install this mod by itself, playing Spectrum hands will require the use of Wild cards. But hey, maybe that's something you want to do.
 
-If your mod does anything with Smeared Joker, be aware that [we've changed its internal name](https://github.com/wingedcatgirl/SpectrumFramework/blob/b309a9c6f4ca43ef449c9d687a06043c0b5e1f06/spectrumframework.lua#L315) and slightly changed its logic.
+Also allows Smeared Joker to make all modded suits count as the same suit, if you want to do that. (Config option, disabled by default.)
 
 ## Things done:
 - The hands

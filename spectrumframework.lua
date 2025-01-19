@@ -8,16 +8,31 @@ SMODS.Atlas {
 local spectrum_config = SMODS.current_mod.config
 
 SMODS.current_mod.config_tab = function()
-    return {n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tl", padding = 0.2, colour = G.C.BLACK}, nodes = {
-        {n = G.UIT.C, config = {minw=1, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15}, nodes = {
-        create_toggle({
-            label = "Spectra are standard",
-            ref_table = spectrum_config,
-            ref_value = 'spectra_are_standard',
-        }),
-        {n = G.UIT.T, config = {colour = G.C.WHITE, padding = 0, text = "Check this if you have\n*many* custom suit mods\nand expect Spectra to be\neasy to score regardless\nof starting deck.\n\nSpectrum hands will be visible\nin Run Info from the start\nand have lower score values.", scale = 0.3}},
-        }}
-    }}
+    return {
+        n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tl", padding = 0.2, colour = G.C.BLACK}, 
+        nodes = {
+                    {n = G.UIT.C, config = {minw=1, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
+                    nodes = {
+                        create_toggle({
+                            label = "Spectra are standard",
+                            ref_table = spectrum_config,
+                            ref_value = 'spectra_are_standard',
+                                    }),
+                        {n = G.UIT.T, config = {colour = G.C.WHITE, padding = 0, text = "Check this if you have\n*many* custom suit mods\nand expect Spectra to be\neasy to score regardless\nof starting deck.\n\nSpectrum hands will be visible\nin Run Info from the start\nand have lower score values.", scale = 0.3}},
+                            }
+                    },
+                    {n = G.UIT.C, config = {minw=1, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
+                    nodes = {
+                        create_toggle({
+                            label = "Smear modded suits",
+                            ref_table = spectrum_config,
+                            ref_value = 'smear_modded_suits',
+                                    }),
+                        {n = G.UIT.T, config = {colour = G.C.WHITE, padding = 0, text = "Smeared Joker causes\nall modded suits to be\nconsidered the same suit", scale = 0.3}},
+                            }
+                    }
+                }
+            }
 end
 
 
@@ -309,25 +324,43 @@ SMODS.Suit{ -- Fake wild card for the demonstration
 }
 
 
-SMODS.Joker:take_ownership('smeared',
-    { name = "Smeared Joker Fixed" }, --use modded smearing logic
-    true 
+SMODS.Joker:take_ownership('smeared',{ 
+    name = "Smeared Joker Fixed", --use modded smearing logic
+    loc_vars = function(self)
+        local key, vars
+
+        if not spectrum_config.smear_modded_suits then
+            key = self.key
+        else
+            key = self.key.."_alt"
+        end
+
+        return { key = key, vars = vars }
+    end,
+    }, true 
 )
 
 local issuitref = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
-    if next(find_joker('Smeared Joker Fixed')) then
-        if (self.base.suit == 'Hearts' or self.base.suit == 'Diamonds') and (suit == 'Hearts' or suit == 'Diamonds') then
+    if self.ability.name == 'Stone Card' then --TODO: find a more general way of checking for suitlessness
+        return false
+    end
+    if self.ability.name == 'Wild Card' or self.base.suit == "spectrum_fakewild" then --TODO: find a more general way of checking for wildness
         return true
-        end
-        if (self.base.suit == 'Spades' or self.base.suit == 'Clubs') and (suit == 'Spades' or suit == 'Clubs') then
-        return true
-        end
     end
     if suit == "spectrum_fakewild" and self.base.suit ~= "spectrum_fakewild" then
         return false
-    elseif self.base.suit == "spectrum_fakewild" then
-        return true
+    end
+    if next(find_joker('Smeared Joker Fixed')) then
+        if (self.base.suit == 'Hearts' or self.base.suit == 'Diamonds') and (suit == 'Hearts' or suit == 'Diamonds') then
+            return true
+        end
+        if (self.base.suit == 'Spades' or self.base.suit == 'Clubs') and (suit == 'Spades' or suit == 'Clubs') then
+            return true
+        end
+        if (self.base.suit ~= 'Spades' and self.base.suit ~= 'Clubs' and self.base.suit ~= 'Hearts' and self.base.suit ~= 'Diamonds') and (suit ~= 'Spades' and suit ~= 'Clubs' and suit ~= 'Hearts' and suit ~= 'Diamonds') and spectrum_config.smear_modded_suits then
+            return true
+        end
     end
     return issuitref(self, suit, bypass_debuff, flush_calc)
 end

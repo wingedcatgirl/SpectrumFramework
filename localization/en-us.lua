@@ -64,6 +64,17 @@ return {
 					"a {C:attention}#2#{}",
 				},
 			},
+			["j_smeared_alt"] = {
+				["name"] = "Smeared Joker",
+				["text"] = {
+					"{C:hearts}Hearts{} and {C:diamonds}Diamonds",
+					"count as the same suit,",
+					"{C:spades}Spades{} and {C:clubs}Clubs",
+					"count as the same suit",
+					"All {C:attention}modded{} suits",
+					"count as the same suit"
+				},
+			},
 		},
 	},
 }

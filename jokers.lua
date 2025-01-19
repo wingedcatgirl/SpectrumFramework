@@ -69,7 +69,7 @@ SMODS.Joker {
                     key = 'a_mult', 
                     vars = { card.ability.extra.mult } 
                 },
-                mult = card.ability.extra.mult
+                mult_mod = card.ability.extra.mult
             }
         end
     end

@@ -109,6 +109,11 @@ function suit_diversity()
     return G.GAME.starting_params.diverse_deck
 end
 
+--Talisman compatibility compatibility
+to_big = to_big or function(x) 
+    return x
+end
+
 
 --Code copied from Bunco, which referenced it from SixSuits.
 
@@ -248,25 +253,25 @@ function Game:start_run(args)
     if easy_spectra() and not args.savetext then
         --sendDebugMessage('[Spectrum Framework] Lowering hand values')
         G.GAME.hands["spectrum_Spectrum"].visible = true
-        G.GAME.hands["spectrum_Spectrum"].mult = 3
-        G.GAME.hands["spectrum_Spectrum"].chips = 20
-        G.GAME.hands["spectrum_Spectrum"].l_mult = 3
-        G.GAME.hands["spectrum_Spectrum"].l_chips = 15
+        G.GAME.hands["spectrum_Spectrum"].mult = to_big(3)
+        G.GAME.hands["spectrum_Spectrum"].chips = to_big(20)
+        G.GAME.hands["spectrum_Spectrum"].l_mult = to_big(3)
+        G.GAME.hands["spectrum_Spectrum"].l_chips = to_big(15)
 
-        G.GAME.hands["spectrum_Straight Spectrum"].mult = 6
-        G.GAME.hands["spectrum_Straight Spectrum"].chips = 60
-        G.GAME.hands["spectrum_Straight Spectrum"].l_mult = 2
-        G.GAME.hands["spectrum_Straight Spectrum"].l_chips = 35
+        G.GAME.hands["spectrum_Straight Spectrum"].mult = to_big(6)
+        G.GAME.hands["spectrum_Straight Spectrum"].chips = to_big(60)
+        G.GAME.hands["spectrum_Straight Spectrum"].l_mult = to_big(2)
+        G.GAME.hands["spectrum_Straight Spectrum"].l_chips = to_big(35)
 
-        G.GAME.hands["spectrum_Spectrum House"].mult = 7
-        G.GAME.hands["spectrum_Spectrum House"].chips = 80
-        G.GAME.hands["spectrum_Spectrum House"].l_mult = 4
-        G.GAME.hands["spectrum_Spectrum House"].l_chips = 35
+        G.GAME.hands["spectrum_Spectrum House"].mult = to_big(7)
+        G.GAME.hands["spectrum_Spectrum House"].chips = to_big(80)
+        G.GAME.hands["spectrum_Spectrum House"].l_mult = to_big(4)
+        G.GAME.hands["spectrum_Spectrum House"].l_chips = to_big(35)
 
-        G.GAME.hands["spectrum_Spectrum Five"].mult = 14
-        G.GAME.hands["spectrum_Spectrum Five"].chips = 120
-        G.GAME.hands["spectrum_Spectrum Five"].l_mult = 3
-        G.GAME.hands["spectrum_Spectrum Five"].l_chips = 40
+        G.GAME.hands["spectrum_Spectrum Five"].mult = to_big(14)
+        G.GAME.hands["spectrum_Spectrum Five"].chips = to_big(120)
+        G.GAME.hands["spectrum_Spectrum Five"].l_mult = to_big(3)
+        G.GAME.hands["spectrum_Spectrum Five"].l_chips = to_big(40)
     else
         if args.savetext then
             --sendDebugMessage('[Spectrum Framework] Restoring saved run, hand values not modified')

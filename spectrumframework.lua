@@ -66,12 +66,12 @@ function suit_diversity()
     local total_count = #G.playing_cards
 
     for k, card in pairs(G.playing_cards) do
-        if card.ability.name == 'Wild Card' then 
+        if SMODS.has_any_suit(card) then 
             wild_count = wild_count + 1
             if wild_count == 1 then
                 --sendDebugMessage('[Spectrum Framework] Deck contains at least 1 Wild Card')
             end
-        elseif card.ability.name == 'Stone Card' then
+        elseif SMODS.has_no_suit(card) then
             stone_count = stone_count +1
             if stone_count == 1 then
                 --sendDebugMessage('[Spectrum Framework] Deck contains at least 1 Stone Card')
@@ -126,7 +126,7 @@ SMODS.PokerHandPart{ -- Spectrum base
         end
         if #hand < 5 then return {} end
         for i = 1, #hand do
-            if hand[i].ability.name ~= 'Wild Card' then
+            if not SMODS.has_any_suit(hand[i]) then
                 for k, v in pairs(suits) do
                     if hand[i]:is_suit(k, nil, true) and v == 0 then
                         suits[k] = v + 1; break
@@ -135,7 +135,7 @@ SMODS.PokerHandPart{ -- Spectrum base
             end
         end
         for i = 1, #hand do
-            if hand[i].ability.name == 'Wild Card' or hand[i].base.suit == "spectrum_fakewild" then
+            if SMODS.has_any_suit(hand[i]) or hand[i].base.suit == "spectrum_fakewild" then
                 for k, v in pairs(suits) do
                     if hand[i]:is_suit(k, nil, true) and v == 0 then
                         suits[k] = v + 1; break

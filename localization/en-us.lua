@@ -32,13 +32,6 @@ return {
 		},
 	},
 	["descriptions"] = {
-		["Blind"] = {
-			["bl_wheel"] = {
-				["text"] = {
-					"#1# in 7 cards get",
-				},
-			},
-		},
 		["Joker"] = {
 			["j_spectrum_pensive"] = {
 				["name"] = "Pensive Joker",

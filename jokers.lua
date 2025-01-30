@@ -1,6 +1,6 @@
-SMODS.Atlas {
+SMODS.Atlas { --Art by CupertinoEffect
     key = 'spectrumjokers',
-    path = "jokers.png",
+    path = "jokers.png", 
     px = 71,
     py = 95
 }

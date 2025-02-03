@@ -18,19 +18,13 @@ SMODS.current_mod.config_tab = function()
                             ref_table = spectrum_config,
                             ref_value = 'spectra_are_standard',
                                     }),
-                        {n = G.UIT.T, config = {colour = G.C.WHITE, padding = 0, text = "Check this if you have\n*many* custom suit mods\nand expect Spectra to be\neasy to score regardless\nof starting deck.\n\nSpectrum hands will be visible\nin Run Info from the start\nand have lower score values.", scale = 0.3}},
-                            }
-                    },
-                    {n = G.UIT.C, config = {minw=0.5, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
-                    nodes = {
                         create_toggle({
                             label = "Smear modded suits",
                             ref_table = spectrum_config,
                             ref_value = 'smear_modded_suits',
                                     }),
-                        {n = G.UIT.T, config = {colour = G.C.WHITE, padding = 0, text = "Smeared Joker causes\nall modded suits to be\nconsidered the same suit", scale = 0.3}},
                             }
-                    }
+                    },
                 }
             }
 end

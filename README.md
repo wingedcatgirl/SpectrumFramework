@@ -7,8 +7,10 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 
 <details>
   <summary>Config Options</summary>
-- Spectra are Standard: Default false. Forces lower-scoring values for Spectrum hands, and shows base Spectrum hand in Run Info immediately. Recommended if you are using many mods which add custom suits.
-- Smear modded suits: Default false. Modifies Smeared Joker to also make all modded suits count as each other. Recommended if you think this sounds like a fun idea.
+<ul>
+<li>Spectra are Standard: Default false. Forces lower-scoring values for Spectrum hands, and shows base Spectrum hand in Run Info immediately. Recommended if you are using many mods which add custom suits.</li>
+<li>Smear modded suits: Default false. Modifies Smeared Joker to also make all modded suits count as each other. Recommended if you think this sounds like a fun idea.</li>
+</ul>
 </details> 
 
 ## Things done:

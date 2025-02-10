@@ -39,6 +39,12 @@ easy_spectra = function()
         --sendDebugMessage('[Spectrum Framework] Deck defines Spectra as easy')
         return true 
     end
+    local deckkey = G.GAME.selected_back.effect.center.key or "deck not found oopsie"
+    --sendDebugMessage("[Spectrum] - Deck key: "..deckkey)
+    if deckkey == "b_cry_cry-wild_deck" then --Force lower values for this deck because it counts out of order
+        --sendDebugMessage("[Spectrum] - Cryptid all-wild deck detected")
+        return true
+    end
     if G.GAME.starting_params.diverse_deck == nil then
         suit_diversity()
     end

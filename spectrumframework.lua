@@ -40,8 +40,10 @@ easy_spectra = function()
         return true 
     end
     local deckkey = G.GAME.selected_back.effect.center.key or "deck not found oopsie"
+    local forceenhance = G.GAME.modifiers.cry_force_enhancement or "not found"
     --sendDebugMessage("[Spectrum] - Deck key: "..deckkey)
-    if deckkey == "b_cry_cry-wild_deck" then --Force lower values for this deck because it counts out of order
+    --sendDebugMessage("Forced enhancement: "..forceenhance, "Spectrum")
+    if deckkey == "b_cry_cry-Enhancement Deck" and forceenhance == "m_wild" then --Force lower values for this deck because it counts out of order
         --sendDebugMessage("[Spectrum] - Cryptid all-wild deck detected")
         return true
     end

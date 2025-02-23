@@ -67,6 +67,11 @@ return {
 					"All {C:attention}modded{} suits",
 					"count as the same suit"
 				},
+				["unlock"] = {
+					"Have at least {C:attention}#1#",
+                    "{E:1,C:attention}#2#{} in",
+                    "your deck",
+				},
 			},
 		},
 	},

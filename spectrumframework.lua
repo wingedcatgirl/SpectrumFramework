@@ -116,6 +116,45 @@ to_big = to_big or function(x)
     return x
 end
 
+function reposition_modded_hands(handlist, modded_positions)
+    -- Step 1: Extract modded hands from the list
+    local extracted_hands = {}
+
+    for i = #handlist, 1, -1 do
+        for mod_hand, _ in pairs(modded_positions) do
+            if handlist[i] == mod_hand then
+                extracted_hands[mod_hand] = handlist[i]
+                table.remove(handlist, i)
+                break
+            end
+        end
+    end
+
+    -- Step 2: Reinsert modded hands at their target positions
+    for mod_hand, target in pairs(modded_positions) do
+        for i, hand in ipairs(handlist) do
+            if hand == target.name then
+                local insert_position = i + (target.position == "below" and 1 or 0)
+                table.insert(handlist, insert_position, mod_hand)
+                break
+            end
+        end
+    end
+end
+
+function reveal_hands()
+    G.GAME.hands["spectrum_Spectrum"].visible = true
+    G.GAME.hands["spectrum_Spectrum House"].visible = true
+    G.GAME.hands["spectrum_Spectrum Five"].visible = true
+    G.GAME.hands["spectrum_Straight Spectrum"].visible = true
+
+    G.GAME.hands["Flush Five"].visible = true
+    G.GAME.hands["Five of a Kind"].visible = true
+    G.GAME.hands["Flush House"].visible = true
+
+    return true
+end
+
 
 --Code copied from Bunco, which referenced it from SixSuits.
 
@@ -274,10 +313,24 @@ function Game:start_run(args)
         G.GAME.hands["spectrum_Spectrum Five"].chips = to_big(120)
         G.GAME.hands["spectrum_Spectrum Five"].l_mult = to_big(3)
         G.GAME.hands["spectrum_Spectrum Five"].l_chips = to_big(40)
+
+        reposition_modded_hands(G.handlist, {
+            ["spectrum_Spectrum Five"] = {name = "Five of a Kind", position = "above"},
+            ["spectrum_Spectrum House"] = {name = "Four of a Kind", position = "above"},
+            ["spectrum_Straight Spectrum"] = {name = "Four of a Kind", position = "below"},
+            ["spectrum_Spectrum"] = {name = "Three of a Kind", position = "below"}
+        })
+        
     else
         if args.savetext then
             --sendDebugMessage('Restoring saved run, hand values not modified', 'Spectrum')
         else
+            reposition_modded_hands(G.handlist, { --Move back to default locations in case they've been lowered
+                ["spectrum_Spectrum Five"] = {name = "Flush Five", position = "above"},
+                ["spectrum_Spectrum House"] = {name = "Flush House", position = "above"},
+                ["spectrum_Straight Spectrum"] = {name = "Straight Flush", position = "above"},
+                ["spectrum_Spectrum"] = {name = "Full House", position = "above"}
+            })
             --sendDebugMessage('Hand values have not been modified for new run'. 'Spectrum')
         end
     end

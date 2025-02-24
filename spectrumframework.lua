@@ -32,34 +32,34 @@ end
 
 easy_spectra = function()
     if spectrum_config.spectra_are_standard then 
-        --sendDebugMessage('Easy Spectra config option checked', 'Spectrum')
+        --specSay('Easy Spectra config option checked', 'Spectrum')
         return true
     end
     if G.GAME.starting_params.easy_spectra then 
-        --sendDebugMessage('Deck defines Spectra as easy', 'Spectrum')
+        --specSay('Deck defines Spectra as easy', 'Spectrum')
         return true 
     end
     local deckkey = G.GAME.selected_back.effect.center.key or "deck not found oopsie"
     local forceenhance = G.GAME.modifiers.cry_force_enhancement or "not found"
-    --sendDebugMessage("Deck key: "..deckkey, "Spectrum")
-    --sendDebugMessage("Forced enhancement: "..forceenhance, "Spectrum")
+    --specSay("Deck key: "..deckkey, "Spectrum")
+    --specSay("Forced enhancement: "..forceenhance, "Spectrum")
     if deckkey == "b_cry_et_deck" and forceenhance == "m_wild" then --Force lower values for this deck because it counts out of order
-        --sendDebugMessage("Cryptid all-wild deck detected", "Spectrum")
+        --specSay("Cryptid all-wild deck detected", "Spectrum")
         return true
     end
     if G.GAME.starting_params.diverse_deck == nil then
         suit_diversity()
     end
     if G.GAME.starting_params.diverse_deck then
-        --sendDebugMessage('Deck detected as diverse.', 'Spectrum')
+        --specSay('Deck detected as diverse.', 'Spectrum')
     end
-    --sendDebugMessage('Nothing detected', 'Spectrum')
+    --specSay('Nothing detected', 'Spectrum')
     return false
 end
 
 function suit_diversity()
     if G.GAME.starting_params.diverse_deck ~= nil then
-        --sendDebugMessage('Deck diversity already determined')
+        --specSay('Deck diversity already determined')
         return G.GAME.starting_params.diverse_deck
     end
     local suit_counts = {}
@@ -71,12 +71,12 @@ function suit_diversity()
         if SMODS.has_any_suit(card) then 
             wild_count = wild_count + 1
             if wild_count == 1 then
-                --sendDebugMessage('Deck contains at least 1 Wild Card', 'Spectrum')
+                --specSay('Deck contains at least 1 Wild Card', 'Spectrum')
             end
         elseif SMODS.has_no_suit(card) then
             stone_count = stone_count +1
             if stone_count == 1 then
-                --sendDebugMessage('Deck contains at least 1 Stone Card', 'Spectrum')
+                --specSay('Deck contains at least 1 Stone Card', 'Spectrum')
             end
         else
             local suit = card.base.suit
@@ -93,19 +93,19 @@ function suit_diversity()
         local notthispercentage = (total_count - (count+stone_count)) / total_count
         if thispercentage > available_factor then
             available_suits = available_suits + 1
-            --sendDebugMessage(suit..' contains '..count..' cards, counts as available', 'Spectrum')
+            --specSay(suit..' contains '..count..' cards, counts as available', 'Spectrum')
         end
         if notthispercentage < domination_factor then
             suit_diversity_met = false
-            --sendDebugMessage(suit..' contains '..count..' cards, deck is '..suit..'-dominated', 'Spectrum')
+            --specSay(suit..' contains '..count..' cards, deck is '..suit..'-dominated', 'Spectrum')
         end        
     end
-    --sendDebugMessage('Deck contains '..available_suits..' available suits.', 'Spectrum')
+    --specSay('Deck contains '..available_suits..' available suits.', 'Spectrum')
     if available_suits < 5 then
         suit_diversity_met = false
-        --sendDebugMessage('Deck is not suit diverse.', 'Spectrum')
+        --specSay('Deck is not suit diverse.', 'Spectrum')
     else
-        --sendDebugMessage('Deck is suit diverse.', 'Spectrum')
+        --specSay('Deck is suit diverse.', 'Spectrum')
     end
     G.GAME.starting_params.diverse_deck = suit_diversity_met
     return G.GAME.starting_params.diverse_deck
@@ -142,7 +142,13 @@ function reposition_modded_hands(handlist, modded_positions)
     end
 end
 
-function reveal_hands()
+function specSay(message, level)
+    message = message or "???"
+    level = level or "DEBUG"
+    sendMessageToConsole(level, "Spectrum Framework", message)
+end
+
+function reveal_hands() -- debug function; call this from DebugPlus if you want to
     G.GAME.hands["spectrum_Spectrum"].visible = true
     G.GAME.hands["spectrum_Spectrum House"].visible = true
     G.GAME.hands["spectrum_Spectrum Five"].visible = true
@@ -292,7 +298,7 @@ function Game:start_run(args)
     GameStartRef(self, args)
 
     if easy_spectra() and not args.savetext then
-        --sendDebugMessage('Lowering hand values', 'Spectrum')
+        --specSay('Lowering hand values', 'Spectrum')
         G.GAME.hands["spectrum_Spectrum"].visible = true
         G.GAME.hands["spectrum_Spectrum"].mult = to_big(3)
         G.GAME.hands["spectrum_Spectrum"].chips = to_big(20)
@@ -323,7 +329,7 @@ function Game:start_run(args)
         
     else
         if args.savetext then
-            --sendDebugMessage('Restoring saved run, hand values not modified', 'Spectrum')
+            --specSay('Restoring saved run, hand values not modified', 'Spectrum')
         else
             reposition_modded_hands(G.handlist, { --Move back to default locations in case they've been lowered
                 ["spectrum_Spectrum Five"] = {name = "Flush Five", position = "above"},
@@ -331,7 +337,7 @@ function Game:start_run(args)
                 ["spectrum_Straight Spectrum"] = {name = "Straight Flush", position = "above"},
                 ["spectrum_Spectrum"] = {name = "Full House", position = "above"}
             })
-            --sendDebugMessage('Hand values have not been modified for new run'. 'Spectrum')
+            --specSay('Hand values have not been modified for new run'. 'Spectrum')
         end
     end
 end
@@ -415,11 +421,11 @@ SMODS.Joker:take_ownership('smeared',{
 local issuitref = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
     if SMODS.has_no_suit(self) then 
-        --sendDebugMessage('Card has no suit')
+        --specSay('Card has no suit')
         return false
     end
     if SMODS.has_any_suit(self) or self.base.suit == "spectrum_fakewild" then
-        --sendDebugMessage('Card is wild')
+        --specSay('Card is wild')
         return true
     end
     if suit == "spectrum_fakewild" and self.base.suit ~= "spectrum_fakewild" then

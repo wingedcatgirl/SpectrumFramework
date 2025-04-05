@@ -35,11 +35,11 @@ Disabling Spectrum Framework mid-run will probably crash your game. Generally sp
 - Joker and planet art [by CupertinoEffect](https://github.com/wingedcatgirl/SpectrumFramework/issues/1)
 
 ## Compatibility
-Will not load alongside the following mods, as they implement Spectrum themself so it would be redundant:
-- Bunco
-
-The following mods implement Spectrum themself but ensure non-redundancy on their end:
+The following mods implement Spectrum themself but ensure non-redundancy on their end, so there's no problem loading them together:
 - Paperback
 - Six Suits
+
+The following mod~~s~~ have not been tested for bugs or anything but will load alongside Spectrum Framework anyway, so [tell us](https://github.com/wingedcatgirl/SpectrumFramework/issues) and/or them if something weird happens:
+- Bunco
 
 [^1]: Okay technically it adds a fake wild suit to demonstrate the Spectrum hands. But you shouldn't actually see that in gameplay.

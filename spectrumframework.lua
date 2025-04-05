@@ -65,6 +65,16 @@ easy_spectra = function()
         --specSay('SixSuits\'s all-suits config option checked')
         return true
     end
+    if SMODS.Mods.draft and SMODS.Mods.draft.can_load then
+        --specSay("Drafting")
+        local count = 0
+        for _ in pairs(G.FUNCS.not_hidden_suits()) do count = count + 1 end
+        --specSay("Count == "..count)
+        if count > 5 then
+            --specSay("Lots of suits")
+            return true
+        end
+    end
     local deckkey = G.GAME.selected_back.effect.center.key or "deck not found oopsie"
     local forceenhance = G.GAME.modifiers.cry_force_enhancement or "not found"
     --specSay("Deck key: "..deckkey, "Spectrum")
@@ -342,6 +352,7 @@ function Game:start_run(args)
 
         if (SMODS.Mods["Bunco"] or {}).can_load then
             G.GAME.hands["bunc_Spectrum"].visible = true
+            G.GAME.hands["spectrum_Spectrum"].visible = false
             local hand_adjustments = {
                 ["bunc_Spectrum"] = { mult = 3,  chips = 20,  l_mult = 3,  l_chips = 15 },
                 ["bunc_Straight Spectrum"] = { mult = 6,  chips = 60,  l_mult = 2,  l_chips = 35 },

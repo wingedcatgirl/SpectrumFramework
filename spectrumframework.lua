@@ -61,6 +61,10 @@ easy_spectra = function()
         --specSay('Deck defines Spectra as easy')
         return true
     end
+    if SMODS.Mods.SixSuits and SMODS.Mods.SixSuits.can_load and SMODS.Mods.SixSuits.config.allow_all_suits then
+        --specSay('SixSuits\'s all-suits config option checked')
+        return true
+    end
     local deckkey = G.GAME.selected_back.effect.center.key or "deck not found oopsie"
     local forceenhance = G.GAME.modifiers.cry_force_enhancement or "not found"
     --specSay("Deck key: "..deckkey, "Spectrum")

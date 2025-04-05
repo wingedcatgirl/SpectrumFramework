@@ -1,6 +1,6 @@
 SMODS.Atlas { --Art by CupertinoEffect
     key = 'spectrumjokers',
-    path = "jokers.png", 
+    path = "jokers.png",
     px = 71,
     py = 95
 }
@@ -27,12 +27,12 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
-        if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) then
+        if context.joker_main and next(context.poker_hands[SPECF.getSpecKey("Spectrum")]) then
             return {
-                message = localize { 
-                    type = 'variable', 
-                    key = 'a_chips', 
-                    vars = { card.ability.extra.chips } 
+                message = localize {
+                    type = 'variable',
+                    key = 'a_chips',
+                    vars = { card.ability.extra.chips }
                 },
                 chip_mod = card.ability.extra.chips
             }
@@ -62,12 +62,12 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
-        if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) then
+        if context.joker_main and next(context.poker_hands[SPECF.getSpecKey("Spectrum")]) then
             return {
-                message = localize { 
-                    type = 'variable', 
-                    key = 'a_mult', 
-                    vars = { card.ability.extra.mult } 
+                message = localize {
+                    type = 'variable',
+                    key = 'a_mult',
+                    vars = { card.ability.extra.mult }
                 },
                 mult_mod = card.ability.extra.mult
             }
@@ -97,12 +97,12 @@ SMODS.Joker {
         }
     end,
     calculate = function(self, card, context)
-        if context.joker_main and next(context.poker_hands['spectrum_Spectrum']) then
+        if context.joker_main and next(context.poker_hands[SPECF.getSpecKey("Spectrum")]) then
             return {
-                message = localize { 
-                    type = 'variable', 
-                    key = 'a_xmult', 
-                    vars = { card.ability.extra.Xmult } 
+                message = localize {
+                    type = 'variable',
+                    key = 'a_xmult',
+                    vars = { card.ability.extra.Xmult }
                 },
                 Xmult_mod = card.ability.extra.Xmult
             }

@@ -6,7 +6,26 @@ SMODS.Atlas {
 }
 
 SPECF = {
-    prefix = SMODS.current_mod.prefix
+    prefix = SMODS.current_mod.prefix,
+    getSpecKey = function(HandName)
+        if not G.GAME then return SPECF.prefix.."_"..HandName end
+        local HandName = HandName or "Spectrum"
+        local lowest_key = nil
+        local lowest_order = math.huge
+        local escaped_name = HandName:gsub("([^%w])", "%%%1")  -- escape magic chars
+
+        local suffix_pattern = "_" .. escaped_name .. "$"
+
+        for key, hand in pairs(G.GAME.hands) do
+            if key:match(suffix_pattern) and type(hand.order) == "number" then
+                if hand.order < lowest_order then
+                    lowest_order = hand.order
+                    lowest_key = key
+                end
+            end
+        end
+        return lowest_key
+    end
 }
 
 local spectrum_config = SMODS.current_mod.config
@@ -32,19 +51,6 @@ SMODS.current_mod.config_tab = function()
                 }
             }
 end
-
-function SPECF.getSpecKey(hand)
-    local hand = hand or "Spectrum"
-    local prefix = SPECF.prefix
-    if (SMODS.Mods["Bunco"] or {}).can_load then 
-        prefix = SMODS.Mods["Bunco"].prefix
-    elseif (SMODS.Mods["paperback"] or {}).can_load then
-        prefix = SMODS.Mods["paperback"].prefix
-    end
-    -- if any future spectrum mod ever uses a different key for their hands adjust it here 
-    return prefix.."_"..hand
-end
-
 
 easy_spectra = function()
     if spectrum_config.spectra_are_standard then
@@ -306,25 +312,22 @@ function Game:start_run(args)
     if easy_spectra() and not args.savetext then
         --specSay('Lowering hand values')
         G.GAME.hands["spectrum_Spectrum"].visible = true
-        G.GAME.hands["spectrum_Spectrum"].mult = to_big(3)
-        G.GAME.hands["spectrum_Spectrum"].chips = to_big(20)
-        G.GAME.hands["spectrum_Spectrum"].l_mult = to_big(3)
-        G.GAME.hands["spectrum_Spectrum"].l_chips = to_big(15)
+        local hand_adjustments = {
+            ["spectrum_Spectrum"] = { mult = 3,  chips = 20,  l_mult = 3,  l_chips = 15 },
+            ["spectrum_Straight Spectrum"] = { mult = 6,  chips = 60,  l_mult = 2,  l_chips = 35 },
+            ["spectrum_Spectrum House"] = { mult = 7,  chips = 80,  l_mult = 4,  l_chips = 35 },
+            ["spectrum_Spectrum Five"] =  { mult = 14, chips = 120, l_mult = 3,  l_chips = 40 },
+        }
 
-        G.GAME.hands["spectrum_Straight Spectrum"].mult = to_big(6)
-        G.GAME.hands["spectrum_Straight Spectrum"].chips = to_big(60)
-        G.GAME.hands["spectrum_Straight Spectrum"].l_mult = to_big(2)
-        G.GAME.hands["spectrum_Straight Spectrum"].l_chips = to_big(35)
-
-        G.GAME.hands["spectrum_Spectrum House"].mult = to_big(7)
-        G.GAME.hands["spectrum_Spectrum House"].chips = to_big(80)
-        G.GAME.hands["spectrum_Spectrum House"].l_mult = to_big(4)
-        G.GAME.hands["spectrum_Spectrum House"].l_chips = to_big(35)
-
-        G.GAME.hands["spectrum_Spectrum Five"].mult = to_big(14)
-        G.GAME.hands["spectrum_Spectrum Five"].chips = to_big(120)
-        G.GAME.hands["spectrum_Spectrum Five"].l_mult = to_big(3)
-        G.GAME.hands["spectrum_Spectrum Five"].l_chips = to_big(40)
+        for hand_name, values in pairs(hand_adjustments) do
+            local hand = G.GAME.hands[hand_name]
+            if hand then
+                hand.mult = to_big(values.mult)
+                hand.chips = to_big(values.chips)
+                hand.l_mult = to_big(values.l_mult)
+                hand.l_chips = to_big(values.l_chips)
+            end
+        end
 
         reposition_modded_hands(G.handlist, {
             ["spectrum_Spectrum Five"] = {name = "Five of a Kind", position = "above"},
@@ -332,6 +335,33 @@ function Game:start_run(args)
             ["spectrum_Straight Spectrum"] = {name = "Four of a Kind", position = "below"},
             ["spectrum_Spectrum"] = {name = "Three of a Kind", position = "below"}
         })
+
+        if (SMODS.Mods["Bunco"] or {}).can_load then
+            G.GAME.hands["bunc_Spectrum"].visible = true
+            local hand_adjustments = {
+                ["bunc_Spectrum"] = { mult = 3,  chips = 20,  l_mult = 3,  l_chips = 15 },
+                ["bunc_Straight Spectrum"] = { mult = 6,  chips = 60,  l_mult = 2,  l_chips = 35 },
+                ["bunc_Spectrum House"] = { mult = 7,  chips = 80,  l_mult = 4,  l_chips = 35 },
+                ["bunc_Spectrum Five"] =  { mult = 14, chips = 120, l_mult = 3,  l_chips = 40 },
+            }
+
+            for hand_name, values in pairs(hand_adjustments) do
+                local hand = G.GAME.hands[hand_name]
+                if hand then
+                    hand.mult = to_big(values.mult)
+                    hand.chips = to_big(values.chips)
+                    hand.l_mult = to_big(values.l_mult)
+                    hand.l_chips = to_big(values.l_chips)
+                end
+            end
+
+            reposition_modded_hands(G.handlist, {
+                ["bunc_Spectrum Five"] = {name = "spectrum_Spectrum Five", position = "above"},
+                ["bunc_Spectrum House"] = {name = "spectrum_Spectrum House", position = "above"},
+                ["bunc_Straight Spectrum"] = {name = "spectrum_Straight Spectrum", position = "above"},
+                ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"}
+            })
+        end
 
     else
         if args.savetext then
@@ -343,6 +373,14 @@ function Game:start_run(args)
                 ["spectrum_Straight Spectrum"] = {name = "Straight Flush", position = "above"},
                 ["spectrum_Spectrum"] = {name = "Full House", position = "above"}
             })
+            if (SMODS.Mods["Bunco"] or {}).can_load then
+                reposition_modded_hands(G.handlist, {
+                    ["bunc_Spectrum Five"] = {name = "spectrum_Spectrum Five", position = "above"},
+                    ["bunc_Spectrum House"] = {name = "spectrum_Spectrum House", position = "above"},
+                    ["bunc_Straight Spectrum"] = {name = "spectrum_Straight Spectrum", position = "above"},
+                    ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"}
+                })
+            end
             --specSay('Hand values have not been modified for new run'. 'Spectrum')
         end
     end

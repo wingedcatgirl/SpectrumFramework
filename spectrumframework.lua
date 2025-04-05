@@ -5,11 +5,15 @@ SMODS.Atlas {
     py = 95
 }
 
+SPECF = {
+    prefix = SMODS.current_mod.prefix
+}
+
 local spectrum_config = SMODS.current_mod.config
 
 SMODS.current_mod.config_tab = function()
     return {
-        n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tl", padding = 0.2, colour = G.C.BLACK}, 
+        n = G.UIT.ROOT, config = {r = 0.1, minw = 8, minh = 6, align = "tl", padding = 0.2, colour = G.C.BLACK},
         nodes = {
                     {n = G.UIT.C, config = {minw=0.5, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
                     nodes = {
@@ -29,15 +33,27 @@ SMODS.current_mod.config_tab = function()
             }
 end
 
+function SPECF.getSpecKey(hand)
+    local hand = hand or "Spectrum"
+    local prefix = SPECF.prefix
+    if (SMODS.Mods["Bunco"] or {}).can_load then 
+        prefix = SMODS.Mods["Bunco"].prefix
+    elseif (SMODS.Mods["paperback"] or {}).can_load then
+        prefix = SMODS.Mods["paperback"].prefix
+    end
+    -- if any future spectrum mod ever uses a different key for their hands adjust it here 
+    return prefix.."_"..hand
+end
+
 
 easy_spectra = function()
-    if spectrum_config.spectra_are_standard then 
-        --specSay('Easy Spectra config option checked', 'Spectrum')
+    if spectrum_config.spectra_are_standard then
+        --specSay('Easy Spectra config option checked')
         return true
     end
-    if G.GAME.starting_params.easy_spectra then 
-        --specSay('Deck defines Spectra as easy', 'Spectrum')
-        return true 
+    if G.GAME.starting_params.easy_spectra then
+        --specSay('Deck defines Spectra as easy')
+        return true
     end
     local deckkey = G.GAME.selected_back.effect.center.key or "deck not found oopsie"
     local forceenhance = G.GAME.modifiers.cry_force_enhancement or "not found"
@@ -50,10 +66,10 @@ easy_spectra = function()
     if G.GAME.starting_params.diverse_deck == nil then
         suit_diversity()
     end
-    if G.GAME.starting_params.diverse_deck then
-        --specSay('Deck detected as diverse.', 'Spectrum')
-    end
-    --specSay('Nothing detected', 'Spectrum')
+    --[[if G.GAME.starting_params.diverse_deck then
+        specSay('Deck detected as diverse.')
+    end]]
+    --specSay('Nothing detected')
     return false
 end
 
@@ -68,16 +84,16 @@ function suit_diversity()
     local total_count = #G.playing_cards
 
     for k, card in pairs(G.playing_cards) do
-        if SMODS.has_any_suit(card) then 
+        if SMODS.has_any_suit(card) then
             wild_count = wild_count + 1
-            if wild_count == 1 then
-                --specSay('Deck contains at least 1 Wild Card', 'Spectrum')
-            end
+            --[[if wild_count == 1 then
+                specSay('Deck contains at least 1 Wild Card')
+            end]]
         elseif SMODS.has_no_suit(card) then
             stone_count = stone_count +1
-            if stone_count == 1 then
-                --specSay('Deck contains at least 1 Stone Card', 'Spectrum')
-            end
+            --[[if stone_count == 1 then
+                specSay('Deck contains at least 1 Stone Card')
+            end]]
         else
             local suit = card.base.suit
             suit_counts[suit] = (suit_counts[suit] or 0) + 1
@@ -93,26 +109,26 @@ function suit_diversity()
         local notthispercentage = (total_count - (count+stone_count)) / total_count
         if thispercentage > available_factor then
             available_suits = available_suits + 1
-            --specSay(suit..' contains '..count..' cards, counts as available', 'Spectrum')
+            --specSay(suit..' contains '..count..' cards, counts as available')
         end
         if notthispercentage < domination_factor then
             suit_diversity_met = false
-            --specSay(suit..' contains '..count..' cards, deck is '..suit..'-dominated', 'Spectrum')
-        end        
+            --specSay(suit..' contains '..count..' cards, deck is '..suit..'-dominated')
+        end
     end
-    --specSay('Deck contains '..available_suits..' available suits.', 'Spectrum')
+    --specSay('Deck contains '..available_suits..' available suits.')
     if available_suits < 5 then
         suit_diversity_met = false
-        --specSay('Deck is not suit diverse.', 'Spectrum')
+        --specSay('Deck is not suit diverse.')
     else
-        --specSay('Deck is suit diverse.', 'Spectrum')
+        --specSay('Deck is suit diverse.')
     end
     G.GAME.starting_params.diverse_deck = suit_diversity_met
     return G.GAME.starting_params.diverse_deck
 end
 
 --Talisman compatibility compatibility
-to_big = to_big or function(x) 
+to_big = to_big or function(x)
     return x
 end
 
@@ -149,15 +165,9 @@ function specSay(message, level)
 end
 
 function reveal_hands() -- debug function; call this from DebugPlus if you want to
-    G.GAME.hands["spectrum_Spectrum"].visible = true
-    G.GAME.hands["spectrum_Spectrum House"].visible = true
-    G.GAME.hands["spectrum_Spectrum Five"].visible = true
-    G.GAME.hands["spectrum_Straight Spectrum"].visible = true
-
-    G.GAME.hands["Flush Five"].visible = true
-    G.GAME.hands["Five of a Kind"].visible = true
-    G.GAME.hands["Flush House"].visible = true
-
+    for _hand_name, hand_data in pairs(G.GAME.hands) do
+        hand_data.visible = true
+    end
     return true
 end
 
@@ -181,16 +191,12 @@ SMODS.PokerHandPart{ -- Spectrum base
                 end
             end
         end
+        local num_suits = 0
         for i = 1, #hand do
             if SMODS.has_any_suit(hand[i]) or hand[i].base.suit == "spectrum_fakewild" then
-                for k, v in pairs(suits) do
-                    if hand[i]:is_suit(k, nil, true) and v == 0 then
-                        suits[k] = v + 1; break
-                    end
-                end
+                num_suits = num_suits + 1
             end
         end
-        local num_suits = 0
         for _, v in pairs(suits) do
             if v > 0 then num_suits = num_suits + 1 end
         end
@@ -298,7 +304,7 @@ function Game:start_run(args)
     GameStartRef(self, args)
 
     if easy_spectra() and not args.savetext then
-        --specSay('Lowering hand values', 'Spectrum')
+        --specSay('Lowering hand values')
         G.GAME.hands["spectrum_Spectrum"].visible = true
         G.GAME.hands["spectrum_Spectrum"].mult = to_big(3)
         G.GAME.hands["spectrum_Spectrum"].chips = to_big(20)
@@ -326,10 +332,10 @@ function Game:start_run(args)
             ["spectrum_Straight Spectrum"] = {name = "Four of a Kind", position = "below"},
             ["spectrum_Spectrum"] = {name = "Three of a Kind", position = "below"}
         })
-        
+
     else
         if args.savetext then
-            --specSay('Restoring saved run, hand values not modified', 'Spectrum')
+            --specSay('Restoring saved run, hand values not modified')
         else
             reposition_modded_hands(G.handlist, { --Move back to default locations in case they've been lowered
                 ["spectrum_Spectrum Five"] = {name = "Flush Five", position = "above"},
@@ -390,7 +396,7 @@ SMODS.Suit{ -- Fake wild card for the demonstration
 }
 
 
-SMODS.Joker:take_ownership('smeared',{ 
+SMODS.Joker:take_ownership('smeared',{
     name = "Smeared Joker Fixed", --use modded smearing logic
     loc_vars = function(self)
         local key, vars
@@ -415,12 +421,12 @@ SMODS.Joker:take_ownership('smeared',{
                     },
                 },
             }
-    end 
+    end
 }, true)
 
 local issuitref = Card.is_suit
 function Card:is_suit(suit, bypass_debuff, flush_calc)
-    if SMODS.has_no_suit(self) then 
+    if SMODS.has_no_suit(self) then
         --specSay('Card has no suit')
         return false
     end

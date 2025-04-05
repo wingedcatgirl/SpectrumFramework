@@ -39,6 +39,7 @@ Will not load alongside the following mods, as they implement Spectrum themself 
 - Bunco
 
 The following mods implement Spectrum themself but ensure non-redundancy on their end:
+- Paperback
 - Six Suits
 
 [^1]: Okay technically it adds a fake wild suit to demonstrate the Spectrum hands. But you shouldn't actually see that in gameplay.

@@ -93,6 +93,18 @@ easy_spectra = function()
     return false
 end
 
+SPECF.in_pool_suits = function ()
+    local ret = {}
+    for key, value in pairs(SMODS.Suits) do
+        if value.in_pool == nil or value.in_pool() then
+            if allow_exotic or not value.exotic then
+                ret[key] = value
+            end
+        end
+    end
+    return ret
+end
+
 function suit_diversity()
     if G.GAME.starting_params.diverse_deck ~= nil then
         --specSay('Deck diversity already determined')
@@ -353,14 +365,14 @@ function Game:start_run(args)
         if (SMODS.Mods["Bunco"] or {}).can_load then
             G.GAME.hands["bunc_Spectrum"].visible = true
             G.GAME.hands["spectrum_Spectrum"].visible = false
-            local hand_adjustments = {
+            local bunco_hand_adjustments = {
                 ["bunc_Spectrum"] = { mult = 3,  chips = 20,  l_mult = 3,  l_chips = 15 },
                 ["bunc_Straight Spectrum"] = { mult = 6,  chips = 60,  l_mult = 2,  l_chips = 35 },
                 ["bunc_Spectrum House"] = { mult = 7,  chips = 80,  l_mult = 4,  l_chips = 35 },
                 ["bunc_Spectrum Five"] =  { mult = 14, chips = 120, l_mult = 3,  l_chips = 40 },
             }
 
-            for hand_name, values in pairs(hand_adjustments) do
+            for hand_name, values in pairs(bunco_hand_adjustments) do
                 local hand = G.GAME.hands[hand_name]
                 if hand then
                     hand.mult = to_big(values.mult)
@@ -374,7 +386,13 @@ function Game:start_run(args)
                 ["bunc_Spectrum Five"] = {name = "spectrum_Spectrum Five", position = "above"},
                 ["bunc_Spectrum House"] = {name = "spectrum_Spectrum House", position = "above"},
                 ["bunc_Straight Spectrum"] = {name = "spectrum_Straight Spectrum", position = "above"},
-                ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"}
+                ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"},
+            })
+            reposition_modded_hands(G.handlist, {
+                ["spectrum_Spectrum Five"] = {name = "High Card", position = "below"},
+                ["spectrum_Spectrum House"] = {name = "High Card", position = "below"},
+                ["spectrum_Straight Spectrum"] = {name = "High Card", position = "below"},
+                ["spectrum_Spectrum"] = {name = "High Card", position = "below"},
             })
         end
 
@@ -393,7 +411,7 @@ function Game:start_run(args)
                     ["bunc_Spectrum Five"] = {name = "spectrum_Spectrum Five", position = "above"},
                     ["bunc_Spectrum House"] = {name = "spectrum_Spectrum House", position = "above"},
                     ["bunc_Straight Spectrum"] = {name = "spectrum_Straight Spectrum", position = "above"},
-                    ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"}
+                    ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"},
                 })
             end
             --specSay('Hand values have not been modified for new run'. 'Spectrum')
@@ -429,6 +447,7 @@ SMODS.Suit{ -- Fake wild card for the demonstration
     key = 'fakewild',
     card_key = 'fakewild',
     hidden = true,
+    fake = true, --Other mods can reference this if they wanna
 
     lc_atlas = 'fakewild_lc',
     hc_atlas = 'fakewild_hc',

@@ -331,6 +331,26 @@ SMODS.PokerHand{ -- Spectrum Five
     end
 }
 
+if (SMODS.Mods["Bunco"] or {}).can_load then -- use Bunco's spectra if available 
+    SMODS.PokerHand:take_ownership("bunc_Spectrum",{
+        above_hand = "spectrum_Spectrum"
+    },
+    true)
+    SMODS.PokerHand:take_ownership("bunc_Straight Spectrum",{
+        above_hand = "spectrum_Straight Spectrum"
+    },
+    true)
+    SMODS.PokerHand:take_ownership("bunc_Spectrum House",{
+        above_hand = "spectrum_Spectrum House"
+    },
+    true)
+    SMODS.PokerHand:take_ownership("bunc_Spectrum Five",{
+        above_hand = "spectrum_Spectrum Five"
+    },
+    true)
+end
+
+
 local GameStartRef = Game.start_run
 function Game:start_run(args)
     GameStartRef(self, args)
@@ -387,12 +407,6 @@ function Game:start_run(args)
                 ["bunc_Spectrum House"] = {name = "spectrum_Spectrum House", position = "above"},
                 ["bunc_Straight Spectrum"] = {name = "spectrum_Straight Spectrum", position = "above"},
                 ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"},
-            })
-            reposition_modded_hands(G.handlist, {
-                ["spectrum_Spectrum Five"] = {name = "High Card", position = "below"},
-                ["spectrum_Spectrum House"] = {name = "High Card", position = "below"},
-                ["spectrum_Straight Spectrum"] = {name = "High Card", position = "below"},
-                ["spectrum_Spectrum"] = {name = "High Card", position = "below"},
             })
         end
 

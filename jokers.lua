@@ -20,10 +20,16 @@ SMODS.Joker {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config =  { extra = {chips = 90, type = 'Spectrum'}}, --p sure that should be localized but idk how
+    config =  { extra = {chips = 90}},
+    in_pool = function()
+        if (SMODS.Mods["Bunco"] or {}).can_load then
+            return false
+        end
+        return true
+    end,
     loc_vars = function(self, info_queue, card)
         return {
-            vars = {card.ability.extra.chips, card.ability.extra.type}
+            vars = {card.ability.extra.chips, localize('spectrum_Spectrum', 'poker_hands')}
         }
     end,
     calculate = function(self, card, context)
@@ -55,10 +61,16 @@ SMODS.Joker {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config =  { extra = {mult = 11, type = 'Spectrum'}}, --p sure that should be localized but idk how
+    config =  { extra = {mult = 11}},
+    in_pool = function()
+        if (SMODS.Mods["Bunco"] or {}).can_load then
+            return false
+        end
+        return true
+    end,
     loc_vars = function(self, info_queue, card)
         return {
-            vars = {card.ability.extra.mult, card.ability.extra.type}
+            vars = {card.ability.extra.mult, localize('spectrum_Spectrum', 'poker_hands')}
         }
     end,
     calculate = function(self, card, context)
@@ -90,10 +102,18 @@ SMODS.Joker {
     eternal_compat = true,
     perishable_compat = true,
     blueprint_compat = true,
-    config =  { extra = {Xmult = 2.5, type = 'Spectrum'}}, --p sure that should be localized but idk how
+    config =  { extra = {Xmult = 2.5}},
+    in_pool = function()
+        if (SMODS.Mods["Bunco"] or {}).can_load then
+            return false
+        end
+        return true
+    end,
     loc_vars = function(self, info_queue, card)
+        local key = self.key
+        SPECF.say(key)
         return {
-            vars = {card.ability.extra.Xmult, card.ability.extra.type}
+            vars = {card.ability.extra.Xmult, localize('spectrum_Spectrum', 'poker_hands')}
         }
     end,
     calculate = function(self, card, context)

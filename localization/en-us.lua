@@ -9,6 +9,13 @@ return {
 			["spectrum_Straight Spectrum_2"] = "Royal Spectrum",
 			["spectrum_Spectrum House"] = "Spectrum House",
 			["spectrum_Straight Spectrum"] = "Straight Spectrum",
+			--[[ Uncomment for testing
+			["bunc_Spectrum"] = "Spectrum (Bunco)",
+			["bunc_Spectrum Five"] = "Spectrum Five (Bunco)",
+			["bunc_Straight Spectrum_2"] = "Royal Spectrum (Bunco)",
+			["bunc_Spectrum House"] = "Spectrum House (Bunco)",
+			["bunc_Straight Spectrum"] = "Straight Spectrum (Bunco)",
+			--]]
 		},
 		["suits_singular"] = {
 			["spectrum_fakewild"] = "fake wild",
@@ -72,6 +79,44 @@ return {
                     "{E:1,C:attention}#2#{} in",
                     "your deck",
 				},
+			},
+		},
+		["Planet"] = {
+			["c_spectrum_Vulcan"] = {
+				["name"] = "Vulcan",
+			},
+			["c_spectrum_Nibiru"] = {
+				["name"] = "Nibiru",
+			},
+			["c_spectrum_Phaeton"] = {
+				["name"] = "Phaeton",
+			},
+			["c_spectrum_Yuggoth"] = {
+				["name"] = "Yuggoth",
+			},
+			["c_spectrum_Vulcan_main"] = {
+				["name"] = "Vulcan",
+			},
+			["c_spectrum_Nibiru_main"] = {
+				["name"] = "Nibiru",
+			},
+			["c_spectrum_Phaeton_main"] = {
+				["name"] = "Phaeton",
+			},
+			["c_spectrum_Yuggoth_main"] = {
+				["name"] = "Yuggoth",
+			},
+			["c_spectrum_Vulcan_alt"] = {
+				["name"] = "Rainbow Planet",
+			},
+			["c_spectrum_Nibiru_alt"] = {
+				["name"] = "House Planet",
+			},
+			["c_spectrum_Phaeton_alt"] = {
+				["name"] = "Line Planet",
+			},
+			["c_spectrum_Yuggoth_alt"] = {
+				["name"] = "Planet Cluster",
 			},
 		},
 	},

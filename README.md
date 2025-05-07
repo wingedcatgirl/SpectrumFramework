@@ -10,6 +10,8 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 <ul>
 <li>Spectra are Standard: Default false. Forces lower-scoring values for Spectrum hands, and shows base Spectrum hand in Run Info immediately. Recommended if you are using many mods which add custom suits.</li>
 <li>Smear modded suits: Default false. Modifies Smeared Joker to also make all modded suits count as each other. Recommended if you think this sounds like a fun idea.</li>
+<li>Dev messages: Sends trace-level dev messages to the console. If you don't know what this means, it's not relevant to you.</li>
+<li>Joker and Planet designs: WIP</li>
 </ul>
 </details> 
 
@@ -28,7 +30,7 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 - Config option to switch between joker and planet versions (in case anyone really prefers a specific one)
 
 ## Warning
-Disabling Spectrum Framework mid-run will probably crash your game. Generally speaking, you should start a new run when your mod loadout changes in any way.
+Disabling Spectrum Framework mid-run will probably crash your game when you continue. Generally speaking, you should start a new run when your mod loadout changes in any way.
 
 ## Attribution
 - A lot of this code came from [Bunco](https://github.com/Firch/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).

@@ -27,7 +27,7 @@ SPECF.spectrum_played = function()
     end
 
     if spectrum_played and (SMODS.Mods["Bunco"] or {}).can_load then
-        if (exotic_in_pool and not exotic_in_pool()) 
+        if (exotic_in_pool and not exotic_in_pool())
         or (BUNCOMOD and BUNCOMOD.funcs and BUNCOMOD.funcs.exotic_in_pool())
         then enable_exotics() end
     end
@@ -40,7 +40,7 @@ end
 ---@return string lowest_key Key of the hand that will score
 SPECF.getSpecKey = function(HandName)
     if not G.GAME then return SPECF.prefix.."_"..HandName end
-    local HandName = HandName or "Spectrum"
+    HandName = HandName or "Spectrum"
     local lowest_key = nil
     local lowest_order = math.huge
     local escaped_name = HandName:gsub("([^%w])", "%%%1")  -- escape magic chars
@@ -65,7 +65,7 @@ SPECF.easy_spectra = function()
         SPECF.say('Easy Spectra config option checked', "TRACE")
         return true
     end
-    if G.GAME.starting_params.easy_spectra then
+    if G.GAME and G.GAME.starting_params.easy_spectra then
         SPECF.say('Deck defines Spectra as easy', "TRACE")
         return true
     end
@@ -201,21 +201,26 @@ SPECF.in_pool_suits = function ()
 end
 
 ---Reveals all hands; call this from DebugPlus if you want to 
+---@param reverse boolean Set this to `true` to hide normally-hidden hands instead.
 ---@return boolean
-SPECF.reveal_hands = function ()
-    for _hand_name, hand_data in pairs(G.GAME.hands) do
-        hand_data.visible = true
+SPECF.reveal_hands = function (reverse)
+    for hand_name, hand_data in pairs(G.GAME.hands) do
+        if reverse and SMODS.PokerHand.obj_table[hand_name] and (SMODS.PokerHand.obj_table[hand_name].visible == false) then
+            hand_data.visible = false
+        else
+            hand_data.visible = true
+        end
     end
-    SPECF.say("All hands revealed", "INFO ")
+    if reverse then 
+        SPECF.say("Hidden hands unrevealed", "INFO ")
+    else
+        SPECF.say("All hands revealed", "INFO ")
+    end
     return true
 end
 
 ---Activates Bunco's exotic system, if you want to do this for some reason
 SPECF.enable_exotics = function()
-    if (SMODS.Mods["Bunco"] or {}).can_load then
-        enable_exotics()
-        return
-    end
     if not G.GAME then return end
     G.GAME.Exotic = true
     SPECF.say('Attempted to enable Exotic System.', "TRACE")
@@ -223,10 +228,6 @@ end
 
 ---Deactivates Bunco's exotic system, if you want to do this for some reason
 SPECF.disable_exotics = function()
-    if (SMODS.Mods["Bunco"] or {}).can_load then
-        disable_exotics()
-        return
-    end
     if not G.GAME then return end
     G.GAME.Exotic = false
     SPECF.say('Attempted to disable Exotic System.', "TRACE")

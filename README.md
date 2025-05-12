@@ -22,6 +22,7 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 - Alternate lower score values for decks that make Spectra very easy to build (e.g. Cryptid's The Lovers deck, or a deck that starts with five or more suits)
   - If your mod has a deck that should use these lower score values, have it set `G.GAME.starting_params.easy_spectra` to true. (Example: [Deck with a Treat](https://github.com/wingedcatgirl/MintysSillyMod/blob/b2c926aef8fca1a08b2a29ac98c0e433363681c4/backs/backs.lua#L11) from Minty's Silly Little Mod)
   - The mod will also try to count suits at the beginning of the run, but it's known to have some issues currently (e.g. with Cryptid's The Lovers deck)
+  - A non-zero number of decks are just force-detected. Guess which deck from Cryptid is one of them.
 
 ## Things planned to probably do
 - Fix the suit-counting thing (figure out a way to make it happen later, probably)

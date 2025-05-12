@@ -15,6 +15,16 @@ return {
 			["bunc_Straight Spectrum_2"] = "Royal Spectrum (Bunco)",
 			["bunc_Spectrum House"] = "Spectrum House (Bunco)",
 			["bunc_Straight Spectrum"] = "Straight Spectrum (Bunco)",
+			["six_Spectrum"] = "Spectrum (Six Suits)",
+			["six_Spectrum Five"] = "Spectrum Five (Six Suits)",
+			["six_Straight Spectrum_2"] = "Royal Spectrum (Six Suits)",
+			["six_Spectrum House"] = "Spectrum House (Six Suits)",
+			["six_Straight Spectrum"] = "Straight Spectrum (Six Suits)",
+			["paperback_Spectrum"] = "Spectrum (Paperback)",
+			["paperback_Spectrum Five"] = "Spectrum Five (Paperback)",
+			["paperback_Straight Spectrum_2"] = "Royal Spectrum (Paperback)",
+			["paperback_Spectrum House"] = "Spectrum House (Paperback)",
+			["paperback_Straight Spectrum"] = "Straight Spectrum (Paperback)",
 			--]]
 		},
 		["suits_singular"] = {
@@ -64,6 +74,78 @@ return {
 					"a {C:attention}#2#{}",
 				},
 			},
+			["j_spectrum_pensive_main"] = {
+				["name"] = "Pensive Joker",
+				["text"] = {
+					"{C:chips}+#1#{} Chips if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_giggly_main"] = {
+				["name"] = "Giggly Joker",
+				["text"] = {
+					"{C:mult}+#1#{} Mult if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_rainbow_main"] = {
+				["name"] = "The Rainbow",
+				["text"] = {
+					"{X:mult,C:white} X#1# {} Mult if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_pensive_six"] = {
+				["name"] = "Manic Joker",
+				["text"] = {
+					"{C:chips}+#1#{} Chips if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_giggly_six"] = {
+				["name"] = "Spectrum Joker",
+				["text"] = {
+					"{C:mult}+#1#{} Mult if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_rainbow_six"] = {
+				["name"] = "The Clan",
+				["text"] = {
+					"{X:mult,C:white} X#1# {} Mult if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_pensive_bunc"] = {
+				["name"] = "Lurid Joker",
+				["text"] = {
+					"{C:chips}+#1#{} Chips if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_giggly_bunc"] = {
+				["name"] = "Zealous Joker",
+				["text"] = {
+					"{C:mult}+#1#{} Mult if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
+			["j_spectrum_rainbow_bunc"] = {
+				["name"] = "The Dynasty",
+				["text"] = {
+					"{X:mult,C:white} X#1# {} Mult if played",
+					"hand contains",
+					"a {C:attention}#2#{}",
+				},
+			},
 			["j_smeared_alt"] = {
 				["name"] = "Smeared Joker",
 				["text"] = {
@@ -82,41 +164,65 @@ return {
 			},
 		},
 		["Planet"] = {
-			["c_spectrum_Vulcan"] = {
+			["c_spectrum_Vulcan"] = { --Spectrum
 				["name"] = "Vulcan",
-			},
-			["c_spectrum_Nibiru"] = {
-				["name"] = "Nibiru",
-			},
-			["c_spectrum_Phaeton"] = {
-				["name"] = "Phaeton",
-			},
-			["c_spectrum_Yuggoth"] = {
-				["name"] = "Yuggoth",
 			},
 			["c_spectrum_Vulcan_main"] = {
 				["name"] = "Vulcan",
 			},
-			["c_spectrum_Nibiru_main"] = {
-				["name"] = "Nibiru",
-			},
-			["c_spectrum_Phaeton_main"] = {
-				["name"] = "Phaeton",
-			},
-			["c_spectrum_Yuggoth_main"] = {
-				["name"] = "Yuggoth",
-			},
 			["c_spectrum_Vulcan_alt"] = {
 				["name"] = "Rainbow Planet",
+			},
+			["c_spectrum_Vulcan_six"] = {
+				["name"] = "GJ 273 c",
+			},
+			["c_spectrum_Vulcan_bunc"] = {
+				["name"] = "Quaoar",
+			},
+			["c_spectrum_Nibiru"] = { --Spectrum House
+				["name"] = "Nibiru",
+			},
+			["c_spectrum_Nibiru_main"] = {
+				["name"] = "Nibiru",
 			},
 			["c_spectrum_Nibiru_alt"] = {
 				["name"] = "House Planet",
 			},
+			["c_spectrum_Nibiru_six"] = {
+				["name"] = "Kepler",
+			},
+			["c_spectrum_Nibiru_bunc"] = {
+				["name"] = "Sedna",
+			},
+			["c_spectrum_Phaeton"] = { --Straight Spectrum
+				["name"] = "Phaeton",
+			},
+			["c_spectrum_Phaeton_main"] = {
+				["name"] = "Phaeton",
+			},
 			["c_spectrum_Phaeton_alt"] = {
 				["name"] = "Line Planet",
 			},
+			["c_spectrum_Phaeton_six"] = {
+				["name"] = "Trappist",
+			},
+			["c_spectrum_Phaeton_bunc"] = {
+				["name"] = "Haumea",
+			},
+			["c_spectrum_Yuggoth"] = { --Spectrum Five
+				["name"] = "Yuggoth",
+			},
+			["c_spectrum_Yuggoth_main"] = {
+				["name"] = "Yuggoth",
+			},
 			["c_spectrum_Yuggoth_alt"] = {
 				["name"] = "Planet Cluster",
+			},
+			["c_spectrum_Yuggoth_six"] = {
+				["name"] = "Proxima",
+			},
+			["c_spectrum_Yuggoth_bunc"] = {
+				["name"] = "Makemake",
 			},
 		},
 	},

@@ -1,17 +1,14 @@
-SMODS.Atlas {
-    key = 'spectrumplaceholders',
-    path = "placeholders.png",
-    px = 71,
-    py = 95
-}
-
 SPECF = {
     prefix = SMODS.current_mod.prefix,
-    config = SMODS.current_mod.config
+    config = SMODS.current_mod.config,
 }
+
+SPECF.config.planet_design.last_option = {} --
+SPECF.config.joker_design.last_option = {}  --Clear these on boot to ensure everything works
 
 SMODS.load_file("configui.lua")()
 
+SMODS.load_file("atli.lua")()
 SMODS.load_file("functions.lua")()
 SMODS.load_file("hands.lua")()
 SMODS.load_file("planets.lua")()
@@ -53,34 +50,6 @@ function Game:start_run(args)
             ["spectrum_Spectrum"] = {name = "Three of a Kind", position = "below"}
         })
 
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            G.GAME.hands["bunc_Spectrum"].visible = true
-            G.GAME.hands["spectrum_Spectrum"].visible = false
-            local bunco_hand_adjustments = {
-                ["bunc_Spectrum"] = { mult = 3,  chips = 20,  l_mult = 3,  l_chips = 15 },
-                ["bunc_Straight Spectrum"] = { mult = 6,  chips = 60,  l_mult = 2,  l_chips = 35 },
-                ["bunc_Spectrum House"] = { mult = 7,  chips = 80,  l_mult = 4,  l_chips = 35 },
-                ["bunc_Spectrum Five"] =  { mult = 14, chips = 120, l_mult = 3,  l_chips = 40 },
-            }
-
-            for hand_name, values in pairs(bunco_hand_adjustments) do
-                local hand = G.GAME.hands[hand_name]
-                if hand then
-                    hand.mult = to_big(values.mult)
-                    hand.chips = to_big(values.chips)
-                    hand.l_mult = to_big(values.l_mult)
-                    hand.l_chips = to_big(values.l_chips)
-                end
-            end
-
-            SPECF.reposition_modded_hands(G.handlist, {
-                ["bunc_Spectrum Five"] = {name = "spectrum_Spectrum Five", position = "above"},
-                ["bunc_Spectrum House"] = {name = "spectrum_Spectrum House", position = "above"},
-                ["bunc_Straight Spectrum"] = {name = "spectrum_Straight Spectrum", position = "above"},
-                ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"},
-            })
-        end
-
     else
         if args.savetext then
             SPECF.say('Restoring saved run, hand values not modified', "TRACE")
@@ -91,38 +60,10 @@ function Game:start_run(args)
                 ["spectrum_Straight Spectrum"] = {name = "Straight Flush", position = "above"},
                 ["spectrum_Spectrum"] = {name = "Full House", position = "above"}
             })
-            if (SMODS.Mods["Bunco"] or {}).can_load then
-                SPECF.reposition_modded_hands(G.handlist, {
-                    ["bunc_Spectrum Five"] = {name = "spectrum_Spectrum Five", position = "above"},
-                    ["bunc_Spectrum House"] = {name = "spectrum_Spectrum House", position = "above"},
-                    ["bunc_Straight Spectrum"] = {name = "spectrum_Straight Spectrum", position = "above"},
-                    ["bunc_Spectrum"] = {name = "spectrum_Spectrum", position = "above"},
-                })
-            end
             SPECF.say('Hand values have not been modified for new run', "TRACE")
         end
     end
 end
-
-SMODS.Atlas {
-    key = 'fakewild_lc',
-    path = "fakewild_lc.png",
-    px = 71,
-    py = 95
-}
-SMODS.Atlas {
-    key = 'fakewild_hc',
-    path = "fakewild_hc.png",
-    px = 71,
-    py = 95
-}
-
-SMODS.Atlas {
-    key = 'fakewild_icon',
-    path = "fakewild_icon.png",
-    px = 18,
-    py = 18
-}
 
 SMODS.Suit{ -- Fake wild card for the demonstration
     key = 'fakewild',

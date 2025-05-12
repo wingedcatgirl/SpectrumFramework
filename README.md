@@ -11,7 +11,7 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 <li>Spectra are Standard: Default false. Forces lower-scoring values for Spectrum hands, and shows base Spectrum hand in Run Info immediately. Recommended if you are using many mods which add custom suits.</li>
 <li>Smear modded suits: Default false. Modifies Smeared Joker to also make all modded suits count as each other. Recommended if you think this sounds like a fun idea.</li>
 <li>Dev messages: Sends trace-level dev messages to the console. If you don't know what this means, it's not relevant to you.</li>
-<li>Joker and Planet designs: WIP</li>
+<li>Joker and Planet designs: Switch between CupertinoEffect's art, my original very silly doodles, or the art from <a href="https://github.com/Aurelius7309/SixSuits">Six Suits</a> and <a href="https://github.com/jumbocarrot0/Bunco">Bunco</a>. Y'know, in case you really like a specific version.</li>
 </ul>
 </details> 
 
@@ -24,13 +24,13 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
   - The mod will also try to count suits at the beginning of the run, but it's known to have some issues currently (e.g. with Cryptid's The Lovers deck)
 
 ## Things planned to probably do
-- Fix the suit-counting thing
+- Fix the suit-counting thing (figure out a way to make it happen later, probably)
 
 ## Things planned to possibly do
-- Config option to switch between joker and planet versions (in case anyone really prefers a specific one)
+- Art switch on a per-item basis (UI design [is my passion](https://web.archive.org/web/20141027160015/http://avdol.co.vu/post/91095908541))
 
 ## Warning
-Disabling Spectrum Framework mid-run will probably crash your game when you continue. Generally speaking, you should start a new run when your mod loadout changes in any way.
+Toggling Spectrum Framework mid-run will probably crash your game when you continue. Generally speaking, you should start a new run when your mod loadout changes in any way.
 
 ## Attribution
 - A lot of this code came from [Bunco](https://github.com/Firch/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).

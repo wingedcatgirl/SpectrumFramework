@@ -25,24 +25,24 @@ SMODS.current_mod.config_tab = function()
                             ref_table = SPECF.config,
                             ref_value = 'dev_messages',
                                     }),
-                        --[[create_option_cycle {
+                        create_option_cycle {
                             label = "Joker Design",
-                            options = {'CupertinoEffect (Default)', 'wingedcatgirl (Doodles)', 'TBA (Six Suits)', 'TBA (Bunco)'},
+                            options = {'CupertinoEffect (Default)', 'wingedcatgirl (Doodles)', 'Aure (Six Suits)', 'Peas (Bunco)'},
                             current_option = SPECF.config.joker_design.current_option,
                             ref_table = SPECF.config,
                             ref_value = "joker_design",
                             opt_callback = 'specf_artcycle',
-                            w = 3
-                            },--]]
+                            w = 5.5
+                            },
                         create_option_cycle {
                             label = "Planet Design",
-                            options = {'CupertinoEffect (Default)', 'wingedcatgirl (Doodles)', 'TBA (Six Suits)', 'TBA (Bunco)'},
+                            options = {'CupertinoEffect (Default)', 'wingedcatgirl (Doodles)', 'Shinku+Reiji (Six Suits)', 'Firch (Bunco)'},
                             current_option = SPECF.config.planet_design.current_option,
                             ref_table = SPECF.config,
                             ref_value = "planet_design",
                             opt_callback = 'specf_artcycle',
                             w = 5.5
-                            },--]]
+                            },
                         },
                     },
                 }

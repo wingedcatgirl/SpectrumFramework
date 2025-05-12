@@ -2,30 +2,98 @@
 SMODS.PokerHandPart{ -- Spectrum base
     key = 'spectrum',
     func = function(hand)
-        local suits = {}
-        for _, v in ipairs(SMODS.Suit.obj_buffer) do
-            suits[v] = 0
-        end
-        if #hand < 5 then return {} end
-        for i = 1, #hand do
-            if not SMODS.has_any_suit(hand[i]) then
-                for k, v in pairs(suits) do
-                    if hand[i]:is_suit(k, nil, true) and v == 0 then
-                        suits[k] = v + 1; break
+        local wild_cards = {}
+        local locked_cards = {}
+        local locked_suits = {}
+        local flex_cards = {}
+
+        for _, card in ipairs(hand) do
+            if not SMODS.has_no_suit(card) then
+                if SMODS.has_any_suit(card) then
+                    table.insert(wild_cards, card)
+                else
+                    local suits = {}
+                    for _, suit in ipairs(SMODS.Suit.obj_buffer) do
+                        if card:is_suit(suit, nil, true) then
+                            table.insert(suits, suit)
+                        end
+                    end
+
+                    if #suits == 1 then
+                        local s = suits[1]
+                        locked_suits[s] = true
+                        table.insert(locked_cards, card)
+                    else
+                        table.insert(flex_cards, {card = card, suits = suits})
                     end
                 end
             end
         end
-        local num_suits = 0
-        for i = 1, #hand do
-            if SMODS.has_any_suit(hand[i]) or hand[i].base.suit == "spectrum_fakewild" then
-                num_suits = num_suits + 1
+
+        local function count_keys(tbl)
+            local n = 0
+            for _ in pairs(tbl) do n = n + 1 end
+            return n
+        end
+
+        local total_possible = count_keys(locked_suits) + #flex_cards + #wild_cards
+        if total_possible < 5 then
+            return {}
+        end
+
+        local initial_suit_count = count_keys(locked_suits)
+        local needed = 5 - initial_suit_count
+
+        if needed <= #wild_cards then
+            -- wilds can fill remaining suit slots
+            local all_cards = {}
+            for _, c in ipairs(locked_cards) do table.insert(all_cards, c) end
+            for _, f in ipairs(flex_cards) do table.insert(all_cards, f.card) end
+            for _, w in ipairs(wild_cards) do table.insert(all_cards, w) end
+            return {all_cards}
+        end
+
+        -- need to find (needed) more unique suits from flex cards
+        local all_suits = {}
+        for _, suit in ipairs(SMODS.Suit.obj_buffer) do
+            if not locked_suits[suit] then
+                table.insert(all_suits, suit)
             end
         end
-        for _, v in pairs(suits) do
-            if v > 0 then num_suits = num_suits + 1 end
+
+        local function assign(i, used_cards, assigned_suits)
+            if i > needed then return true end
+            local suit = all_suits[i]
+
+            for j, flex in ipairs(flex_cards) do
+                if not used_cards[j] then
+                    for _, s in ipairs(flex.suits) do
+                        if s == suit then
+                            used_cards[j] = true
+                            assigned_suits[suit] = true
+                            if assign(i + 1, used_cards, assigned_suits) then
+                                return true
+                            end
+                            used_cards[j] = false
+                            assigned_suits[suit] = nil
+                            break
+                        end
+                    end
+                end
+            end
+
+            return false
         end
-        return (num_suits >= 5) and {hand} or {}
+
+        if needed <= #flex_cards and assign(1, {}, {}) then
+            local all_cards = {}
+            for _, c in ipairs(locked_cards) do table.insert(all_cards, c) end
+            for _, f in ipairs(flex_cards) do table.insert(all_cards, f.card) end
+            for _, w in ipairs(wild_cards) do table.insert(all_cards, w) end
+            return {all_cards}
+        else
+            return {}
+        end
     end
 }
 
@@ -124,21 +192,102 @@ SMODS.PokerHand{ -- Spectrum Five
     end
 }
 
-if (SMODS.Mods["Bunco"] or {}).can_load then -- use Bunco's spectra if available 
+local pokerhandinforef = G.FUNCS.get_poker_hand_info --Spectrum Six and so forth, copied from Cryptid
+function G.FUNCS.get_poker_hand_info(_cards)
+	local text, loc_disp_text, poker_hands, scoring_hand, disp_text = pokerhandinforef(_cards)
+    if #scoring_hand > 5 and (loc_disp_text == "Spectrum Five") then
+        local rank_array = {}
+        local county = 0
+        for i = 1, #scoring_hand do
+            local val = scoring_hand[i]:get_id()
+            rank_array[val] = (rank_array[val] or 0) + 1
+            if rank_array[val] > county then
+                county = rank_array[val]
+            end
+        end
+        local function create_num_chunk(int)
+            if int >= 1000 then
+                int = 999
+            end
+            local ones = {
+                ["1"] = "One",
+                ["2"] = "Two",
+                ["3"] = "Three",
+                ["4"] = "Four",
+                ["5"] = "Five",
+                ["6"] = "Six",
+                ["7"] = "Seven",
+                ["8"] = "Eight",
+                ["9"] = "Nine",
+            }
+            local tens = {
+                ["1"] = "Ten",
+                ["2"] = "Twenty",
+                ["3"] = "Thirty",
+                ["4"] = "Forty",
+                ["5"] = "Fifty",
+                ["6"] = "Sixty",
+                ["7"] = "Seventy",
+                ["8"] = "Eighty",
+                ["9"] = "Ninety",
+            }
+            local str_int = string.reverse(int .. "")
+            local str_ret = ""
+            for i = 1, string.len(str_int) do
+                local place = str_int:sub(i, i)
+                if place ~= "0" then
+                    if i == 1 then
+                        str_ret = ones[place]
+                    elseif i == 2 then
+                        if place == "1" and str_ret ~= "" then
+                            if str_ret == "One" then
+                                str_ret = "Eleven"
+                            elseif str_ret == "Two" then
+                                str_ret = "Twelve"
+                            elseif str_ret == "Three" then
+                                str_ret = "Thirteen"
+                            elseif str_ret == "Five" then
+                                str_ret = "Fifteen"
+                            elseif str_ret == "Eight" then
+                                str_ret = "Eighteen"
+                            else
+                                str_ret = str_ret .. "teen"
+                            end
+                        else
+                            str_ret = tens[place] .. ((string.len(str_ret) > 0 and " " or "") .. str_ret)
+                        end
+                    elseif i == 3 then
+                        str_ret = ones[place]
+                            .. (" Hundred" .. ((string.len(str_ret) > 0 and " and " or "") .. str_ret))
+                    end
+                end
+            end
+            return str_ret
+        end
+        loc_disp_text = "Spectrum "
+            .. (
+                (county < 1000 and create_num_chunk(county) or "Thousand")
+            )
+    end
+	return text, loc_disp_text, poker_hands, scoring_hand, disp_text
+end
+
+
+if (SMODS.Mods["Bunco"] or {}).can_load then -- suppress Bunco's spectra if present 
     SMODS.PokerHand:take_ownership("bunc_Spectrum",{
-        above_hand = "spectrum_Spectrum"
+        above_hand = "High Card"
     },
     true)
     SMODS.PokerHand:take_ownership("bunc_Straight Spectrum",{
-        above_hand = "spectrum_Straight Spectrum"
+        above_hand = "High Card"
     },
     true)
     SMODS.PokerHand:take_ownership("bunc_Spectrum House",{
-        above_hand = "spectrum_Spectrum House"
+        above_hand = "High Card"
     },
     true)
     SMODS.PokerHand:take_ownership("bunc_Spectrum Five",{
-        above_hand = "spectrum_Spectrum Five"
+        above_hand = "High Card"
     },
     true)
 end

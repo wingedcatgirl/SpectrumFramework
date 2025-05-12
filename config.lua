@@ -5,9 +5,11 @@ return {
     ["planet_design"] = {
         current_option = 1,
         option_value = "CupertinoEffect (Default)",
+        last_option = {},
     },
     ["joker_design"] = {
         current_option = 1,
         option_value = "CupertinoEffect (Default)",
+        last_option = {},
     },
 }

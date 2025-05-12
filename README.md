@@ -30,7 +30,7 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 - Art switch on a per-item basis (UI design [is my passion](https://web.archive.org/web/20141027160015/http://avdol.co.vu/post/91095908541))
 
 ## Warning
-Toggling Spectrum Framework mid-run will probably crash your game when you continue. Generally speaking, you should start a new run when your mod loadout changes in any way.
+Toggling or updating Spectrum Framework mid-run will probably crash your game when you continue. Generally speaking, you should start a new run when your mod loadout changes in any way.
 
 ## Attribution
 - A lot of this code came from [Bunco](https://github.com/Firch/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).

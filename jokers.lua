@@ -269,3 +269,24 @@ SMODS.Joker {
         end
     end
 }
+
+if (SMODS.Mods["Bunco"] or {}).can_load then -- suppress Bunco's Spectrum jokers if present 
+    SMODS.Joker:take_ownership("j_bunc_zealous", {
+        in_pool = function (self, args)
+            return false
+        end,
+        no_collection = true
+    })
+    SMODS.Joker:take_ownership("j_bunc_lurid", {
+        in_pool = function (self, args)
+            return false
+        end,
+        no_collection = true
+    })
+    SMODS.Joker:take_ownership("j_bunc_dynasty", {
+        in_pool = function (self, args)
+            return false
+        end,
+        no_collection = true
+    })
+end

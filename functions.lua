@@ -232,3 +232,9 @@ SPECF.disable_exotics = function()
     G.GAME.Exotic = false
     SPECF.say('Attempted to disable Exotic System.', "TRACE")
 end
+
+--[[ This happens before the rest of the run-start stuff
+function SMODS.current_mod.reset_game_globals(start)
+    
+end
+]]

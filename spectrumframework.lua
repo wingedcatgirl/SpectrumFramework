@@ -22,6 +22,7 @@ end
 local GameStartRef = Game.start_run
 function Game:start_run(args)
     GameStartRef(self, args)
+    SPECF.say("Starting run", "TRACE")
 
     if SPECF.easy_spectra() and not args.savetext then
         SPECF.say('Lowering hand values', "TRACE")

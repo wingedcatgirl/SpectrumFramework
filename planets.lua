@@ -75,8 +75,10 @@ SMODS.Consumable{ -- Vulcan/Rainbow Planet
             planetref.atlas = 'spectrum_planets'
         elseif art == 2 then --Doodles by wingedcatgirl
             planetref.atlas = 'spectrum_planets-doodles'
-            planetref.soul_pos = planetref.pos
-            planetref.soul_pos.y = 1
+            planetref.soul_pos = {
+                x = planetref.pos.x,
+                y = 1
+            }
         elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
         elseif art == 4 then
@@ -169,8 +171,10 @@ SMODS.Consumable{ -- Nibiru/House Planet
             planetref.atlas = 'spectrum_planets'
         elseif art == 2 then --Doodles by wingedcatgirl
             planetref.atlas = 'spectrum_planets-doodles'
-            planetref.soul_pos = planetref.pos
-            planetref.soul_pos.y = 1
+            planetref.soul_pos = {
+                x = planetref.pos.x,
+                y = 1
+            }
         elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
         elseif art == 4 then
@@ -263,8 +267,10 @@ SMODS.Consumable{ -- Phaeton/Line Planet
             planetref.atlas = 'spectrum_planets'
         elseif art == 2 then --Doodles by wingedcatgirl
             planetref.atlas = 'spectrum_planets-doodles'
-            planetref.soul_pos = planetref.pos
-            planetref.soul_pos.y = 1
+            planetref.soul_pos = {
+                x = planetref.pos.x,
+                y = 1
+            }
         elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
         elseif art == 4 then
@@ -358,8 +364,10 @@ SMODS.Consumable{ -- Yuggoth/Planet Cluster
             planetref.atlas = 'spectrum_planets'
         elseif art == 2 then --Doodles by wingedcatgirl
             planetref.atlas = 'spectrum_planets-doodles'
-            planetref.soul_pos = planetref.pos
-            planetref.soul_pos.y = 1
+            planetref.soul_pos = {
+                x = planetref.pos.x,
+                y = 1
+            }
         elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
         elseif art == 4 then --Art by (TODO2: find who this was) from Bunco

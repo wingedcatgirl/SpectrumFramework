@@ -382,3 +382,98 @@ SMODS.Consumable{ -- Yuggoth/Planet Cluster
         end
     end,
 }
+
+
+if (SMODS.Mods["Cryptid"] or {}).can_load then
+    SMODS.Consumable{ -- Cryptid triple-planet
+        set = 'Planet',
+        cost = 4,
+        unlocked = true,
+        discovered = false,
+        atlas = 'planets',
+        pos = {x=4, y=0},
+        key = 'Ambira',
+        name = "Ambira",
+        effect = 'Hand Upgrade',
+        config = {
+            hand_types = {
+                'spectrum_Straight Spectrum',
+                'spectrum_Spectrum House',
+                'spectrum_Spectrum Five',
+            },
+            softlock = true},
+        set_card_type_badge = function(self, card, badges)
+            badges[1] = create_badge("Planet?", get_type_colour(self or card.config, card), nil, 1.2)
+        end,
+        in_pool = function()
+            local advanced_spectrum_played = false
+            if G and G.GAME and G.GAME.hands then
+                for k, v in pairs(G.GAME.hands) do
+                    if (
+                    string.find(k, "Straight Spectrum", nil, true)
+                    or string.find(k, "Spectrum House", nil, true)
+                    or string.find(k, "Spectrum Five", nil, true)
+                    ) then
+                        if G.GAME.hands[k].played > 0 then
+                            advanced_spectrum_played = true
+                            break
+                        end
+                    end
+                end
+            end
+            return advanced_spectrum_played
+        end,
+        loc_vars = function(self, info_queue, card)
+            return {
+                vars = {
+                    localize("spectrum_Straight Spectrum", "poker_hands"),
+                    localize("spectrum_Spectrum House", "poker_hands"),
+                    localize("spectrum_Spectrum Five", "poker_hands"),
+                    number_format(G.GAME.hands["spectrum_Straight Spectrum"].level),
+                    number_format(G.GAME.hands["spectrum_Spectrum House"].level),
+                    number_format(G.GAME.hands["spectrum_Spectrum Five"].level),
+                    colours = {
+                        (
+                            to_big(G.GAME.hands["spectrum_Straight Spectrum"].level) == to_big(1) and G.C.UI.TEXT_DARK
+                            or G.C.HAND_LEVELS[to_number(to_big(math.min(7, G.GAME.hands["spectrum_Straight Spectrum"].level)))]
+                        ),
+                        (
+                            to_big(G.GAME.hands["spectrum_Spectrum House"].level) == to_big(1) and G.C.UI.TEXT_DARK
+                            or G.C.HAND_LEVELS[to_number(to_big(math.min(7, G.GAME.hands["spectrum_Spectrum House"].level)))]
+                        ),
+                        (
+                            to_big(G.GAME.hands["spectrum_Spectrum Five"].level) == to_big(1) and G.C.UI.TEXT_DARK
+                            or G.C.HAND_LEVELS[to_number(to_big(math.min(7, G.GAME.hands["spectrum_Spectrum Five"].level)))]
+                        ),
+                    },
+                },
+            }
+        end,
+        can_use = function(self, card)
+            return true
+        end,
+        use = function(self, card, area, copier)
+            Cryptid.suit_level_up(card, copier, 1, card.config.center.config.hand_types)
+        end,
+        bulk_use = function(self, card, area, copier, number)
+            Cryptid.suit_level_up(card, copier, number, card.config.center.config.hand_types)
+        end,
+        calculate = function(self, card, context)
+            if
+                G.GAME.used_vouchers.v_observatory
+                and context.joker_main
+                and (
+                    context.scoring_name == "Straight Spectrum"
+                    or context.scoring_name == "Spectrum House"
+                    or context.scoring_name == "Spectrum Five"
+                )
+            then
+                local value = G.P_CENTERS.v_observatory.config.extra
+                return {
+                    message = localize({ type = "variable", key = "a_xmult", vars = { value } }),
+                    Xmult_mod = value,
+                }
+            end
+        end,
+    }
+end

@@ -224,6 +224,16 @@ return {
 			["c_spectrum_Yuggoth_bunc"] = {
 				["name"] = "Makemake",
 			},
+			["c_spectrum_Ambira"] = { --Three of them
+				["name"] = "Ambira",
+				["text"] = {
+					"({V:1}lvl.#4#{})({V:2}lvl.#5#{})({V:3}lvl.#6#{})",
+					"Level up",
+					"{C:attention}#1#{},",
+					"{C:attention}#2#{},",
+					"and {C:attention}#3#{}",
+				}
+			},
 		},
 	},
 }

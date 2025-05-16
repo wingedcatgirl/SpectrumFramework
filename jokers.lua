@@ -53,9 +53,9 @@ SMODS.Joker {
                 x = 3,
                 y = 0
             }
-        elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
+        elseif art == 3 then --Art by Aure from Six Suits
             jokerref.atlas = 'spectrum_jokers-sixsuits'
-        elseif art == 4 then
+        elseif art == 4 then --Art by Peas from Bunco
             jokerref.atlas = 'spectrum_jokers-bunco'
         else --Fall back on default art 
             jokerref.atlas = 'spectrum_jokers'
@@ -144,9 +144,9 @@ SMODS.Joker {
                 x = 3,
                 y = 0
             }
-        elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
+        elseif art == 3 then --Art by Aure from Six Suits
             jokerref.atlas = 'spectrum_jokers-sixsuits'
-        elseif art == 4 then
+        elseif art == 4 then --Art by Peas from Bunco
             jokerref.atlas = 'spectrum_jokers-bunco'
         else --Fall back on default art 
             jokerref.atlas = 'spectrum_jokers'
@@ -235,7 +235,7 @@ SMODS.Joker {
                 x = 3,
                 y = 0
             }
-        elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
+        elseif art == 3 then --Art by Aure from Six Suits
             jokerref.atlas = 'spectrum_jokers-sixsuits'
         elseif art == 4 then --Art by Peas from Bunco
             jokerref.atlas = 'spectrum_jokers-bunco'

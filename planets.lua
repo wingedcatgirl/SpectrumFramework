@@ -79,9 +79,9 @@ SMODS.Consumable{ -- Vulcan/Rainbow Planet
                 x = planetref.pos.x,
                 y = 1
             }
-        elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
+        elseif art == 3 then --Art by Shinku+Reiji from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
-        elseif art == 4 then
+        elseif art == 4 then --Art by Firch from Bunco
             planetref.atlas = 'spectrum_planets-bunco'
         else --Fall back on default art 
             planetref.atlas = 'spectrum_planets'
@@ -175,9 +175,9 @@ SMODS.Consumable{ -- Nibiru/House Planet
                 x = planetref.pos.x,
                 y = 1
             }
-        elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
+        elseif art == 3 then --Art by Shinku+Reiji from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
-        elseif art == 4 then
+        elseif art == 4 then --Art by Firch from Bunco
             planetref.atlas = 'spectrum_planets-bunco'
         else --Fall back on default art 
             planetref.atlas = 'spectrum_planets'
@@ -271,9 +271,9 @@ SMODS.Consumable{ -- Phaeton/Line Planet
                 x = planetref.pos.x,
                 y = 1
             }
-        elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
+        elseif art == 3 then --Art by Shinku+Reiji from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
-        elseif art == 4 then
+        elseif art == 4 then --Art by Firch from Bunco
             planetref.atlas = 'spectrum_planets-bunco'
         else --Fall back on default art 
             planetref.atlas = 'spectrum_planets'
@@ -368,9 +368,9 @@ SMODS.Consumable{ -- Yuggoth/Planet Cluster
                 x = planetref.pos.x,
                 y = 1
             }
-        elseif art == 3 then --Art by (TODO: find who this was) from Six Suits
+        elseif art == 3 then --Art by Shinku+Reiji from Six Suits
             planetref.atlas = 'spectrum_planets-sixsuits'
-        elseif art == 4 then --Art by (TODO2: find who this was) from Bunco
+        elseif art == 4 then --Art by Firch from Bunco
             planetref.atlas = 'spectrum_planets-bunco'
         else --Fall back on default art 
             planetref.atlas = 'spectrum_planets'

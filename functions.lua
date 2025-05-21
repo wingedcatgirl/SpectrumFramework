@@ -28,7 +28,7 @@ SPECF.spectrum_played = function()
 
     if spectrum_played and (SMODS.Mods["Bunco"] or {}).can_load then
         if (exotic_in_pool and not exotic_in_pool())
-        or (BUNCOMOD and BUNCOMOD.funcs and BUNCOMOD.funcs.exotic_in_pool())
+        or (BUNCOMOD and BUNCOMOD.funcs and not BUNCOMOD.funcs.exotic_in_pool())
         then enable_exotics() end
     end
 

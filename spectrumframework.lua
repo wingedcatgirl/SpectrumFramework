@@ -26,6 +26,7 @@ function Game:start_run(args)
 
     if SPECF.easy_spectra() and not args.savetext then
         SPECF.say('Lowering hand values', "TRACE")
+        G.GAME.spectra_are_easy = true
         G.GAME.hands["spectrum_Spectrum"].visible = true
         local hand_adjustments = {
             ["spectrum_Spectrum"] = { mult = 3,  chips = 20,  l_mult = 3,  l_chips = 15 },
@@ -39,6 +40,8 @@ function Game:start_run(args)
             if hand then
                 hand.mult = to_big(values.mult)
                 hand.chips = to_big(values.chips)
+                hand.s_mult = to_big(values.mult)
+                hand.s_chips = to_big(values.chips)
                 hand.l_mult = to_big(values.l_mult)
                 hand.l_chips = to_big(values.l_chips)
             end
@@ -53,7 +56,16 @@ function Game:start_run(args)
 
     else
         if args.savetext then
-            SPECF.say('Restoring saved run, hand values not modified', "TRACE")
+            SPECF.say('Restoring saved run', "TRACE")
+            if G.GAME.spectra_are_easy then
+                SPECF.reposition_modded_hands(G.handlist, {
+                    ["spectrum_Spectrum Five"] = {name = "Five of a Kind", position = "above"},
+                    ["spectrum_Spectrum House"] = {name = "Four of a Kind", position = "above"},
+                    ["spectrum_Straight Spectrum"] = {name = "Four of a Kind", position = "below"},
+                    ["spectrum_Spectrum"] = {name = "Three of a Kind", position = "below"}
+                })
+                SPECF.say("Hands moved to lower positions", "TRACE")
+            end
         else
             SPECF.reposition_modded_hands(G.handlist, { --Move back to default locations in case they've been lowered
                 ["spectrum_Spectrum Five"] = {name = "Flush Five", position = "above"},

@@ -30,11 +30,11 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 ## Things planned to possibly do
 - Art switch on a per-item basis (UI design [is my passion](https://web.archive.org/web/20141027160015/http://avdol.co.vu/post/91095908541))
 
-## Warning
-Toggling or updating Spectrum Framework mid-run will probably crash your game when you continue. Generally speaking, you should start a new run when your mod loadout changes in any way.
+> [!IMPORTANT]  
+> Toggling or updating Spectrum Framework mid-run will probably crash your game when you continue. Generally speaking, you should start a new run when your mod loadout changes in any way.
 
 ## Attribution
-- A lot of this code came from [Bunco](https://github.com/Firch/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).
+- A lot of this code came from [Bunco](https://github.com/jumbocarrot0/Bunco), which in turn got it from [Six Suits](https://github.com/lshtech/SixSuits).
 - Joker and planet art [by CupertinoEffect](https://github.com/wingedcatgirl/SpectrumFramework/issues/1)
 
 ## Compatibility
@@ -45,4 +45,5 @@ The following mods implement Spectrum themself but ensure non-redundancy on thei
 The following mod~~s~~ have not been tested for bugs or anything but will load alongside Spectrum Framework anyway, so [tell us](https://github.com/wingedcatgirl/SpectrumFramework/issues) and/or them if something weird happens:
 - Bunco
 
+---
 [^1]: Okay technically it adds a fake wild suit to demonstrate the Spectrum hands. But you shouldn't actually see that in gameplay.

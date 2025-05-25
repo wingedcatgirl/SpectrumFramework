@@ -7,6 +7,9 @@ SPECF.say = function(message, level)
     end
     message = message or "???"
     level = level or "DEBUG"
+    while #level < 5 do
+        level = level.." "
+    end
     sendMessageToConsole(level, "Spectrum Framework", message)
 end
 
@@ -191,7 +194,7 @@ end
 SPECF.in_pool_suits = function ()
     local ret = {}
     for key, value in pairs(SMODS.Suits) do
-        if value.in_pool == nil or value.in_pool() then
+        if value.in_pool == nil or value:in_pool() then
             if allow_exotic or not value.exotic then
                 ret[key] = value
             end

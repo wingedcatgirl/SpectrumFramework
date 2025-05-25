@@ -1,0 +1,17 @@
+[manifest]
+version = "1.0.0"
+priority = 1
+
+# Add spectra to hand list for ascension
+[[patches]]
+[patches.pattern]
+target = '=[SMODS Cryptid "lib/ascended.lua"]'
+pattern = '		["cry_WholeDeck"] = 52,'
+position = "after"
+payload = '''
+		["spectrum_Spectrum"] = 5,
+		["spectrum_Straight Spectrum"] = 5,
+		["spectrum_Spectrum House"] = 5,
+		["spectrum_Spectrum Five"] = 5,
+'''
+match_indent = true

@@ -9,6 +9,11 @@ return {
 			["spectrum_Straight Spectrum_2"] = "Royal Spectrum",
 			["spectrum_Spectrum House"] = "Spectrum House",
 			["spectrum_Straight Spectrum"] = "Straight Spectrum",
+			["spectrum_Specflush"] = "Specflush",
+			["spectrum_Specflush Five"] = "Specflush Five",
+			["spectrum_Straight Specflush_2"] = "Royal Specflush",
+			["spectrum_Specflush House"] = "Specflush House",
+			["spectrum_Straight Specflush"] = "Straight Specflush",
 			--[[ Uncomment for testing
 			["bunc_Spectrum"] = "Spectrum (Bunco)",
 			["bunc_Spectrum Five"] = "Spectrum Five (Bunco)",
@@ -45,6 +50,22 @@ return {
 			["spectrum_Spectrum House"] = {
 				"A Three of a Kind and a Pair with",
 				"each card having a different suit",
+			},
+			["spectrum_Specflush"] = {
+				"A hand containing both",
+				"a Spectrum and a Flush",
+			},
+			["spectrum_Specflush Five"] = {
+				"A hand containing a Spectrum,",
+				"a Flush, and a Five of a Kind"
+			},
+			["spectrum_Straight Specflush"] = {
+				"A hand containing a Spectrum,",
+				"a Flush, and a Straight"
+			},
+			["spectrum_Specflush House"] = {
+				"A hand containing all of a Spectrum,",
+				"a Flush, a Pair, and a Three of a Kind"
 			},
 		},
 	},

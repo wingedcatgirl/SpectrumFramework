@@ -16,6 +16,11 @@ SMODS.current_mod.config_tab = function()
                             ref_value = 'spectra_are_standard',
                                     }),
                         create_toggle({
+                            label = "Specflush hand",
+                            ref_table = SPECF.config,
+                            ref_value = 'specflush',
+                                    }),
+                        create_toggle({
                             label = "Smear modded suits",
                             ref_table = SPECF.config,
                             ref_value = 'smear_modded_suits',

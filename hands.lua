@@ -192,10 +192,95 @@ SMODS.PokerHand{ -- Spectrum Five
     end
 }
 
+SMODS.PokerHand{ -- Specflush
+    key = 'Specflush',
+    visible = false,
+    chips = 75,
+    mult = 10,
+    l_chips = 35,
+    l_mult = 5,
+    example = {
+        { 'S_2',    true },
+        { 'spectrum_fakewild_5', true },
+        { 'spectrum_fakewild_J', true },
+        { 'spectrum_fakewild_A', true },
+        { 'spectrum_fakewild_8', true },
+    },
+    evaluate = function(parts)
+        if not SPECF.config.specflush then return {} end
+        if not next(parts.spectrum_spectrum) or not next(parts._flush) then return {} end
+        return { SMODS.merge_lists (parts.spectrum_spectrum, parts._flush) }
+    end,
+}
+
+SMODS.PokerHand{ -- Straight Specflush
+    key = 'Straight Specflush',
+    visible = false,
+    chips = 130,
+    mult = 11,
+    l_chips = 40,
+    l_mult = 5,
+    example = {
+        { 'S_A',    true },
+        { 'spectrum_fakewild_2', true },
+        { 'spectrum_fakewild_3', true },
+        { 'spectrum_fakewild_4', true },
+        { 'spectrum_fakewild_5', true },
+    },
+    evaluate = function(parts)
+        if not SPECF.config.specflush then return {} end
+        if not next(parts.spectrum_spectrum) or not next(parts._flush) or not next(parts._straight) then return {} end
+        return { SMODS.merge_lists (parts.spectrum_spectrum, parts._flush, parts._straight) }
+    end,
+}
+
+SMODS.PokerHand{ -- Specflush House
+    key = 'Specflush House',
+    visible = false,
+    chips = 175,
+    mult = 15,
+    l_chips = 70,
+    l_mult = 5,
+    example = {
+        { 'S_A',    true },
+        { 'spectrum_fakewild_A', true },
+        { 'spectrum_fakewild_A', true },
+        { 'spectrum_fakewild_5', true },
+        { 'spectrum_fakewild_5', true },
+    },
+    evaluate = function(parts)
+        if not SPECF.config.specflush then return {} end
+        if #parts._3 < 1 or #parts._2 < 2 or not next(parts.spectrum_spectrum) or not next(parts._flush) then return {} end
+        return { SMODS.merge_lists (parts.spectrum_spectrum, parts._flush, parts._all_pairs) }
+    end,
+}
+
+SMODS.PokerHand{ -- Specflush Five
+    key = 'Specflush Five',
+    visible = false,
+    chips = 190,
+    mult = 19,
+    l_chips = 80,
+    l_mult = 5,
+    example = {
+        { 'S_8',    true },
+        { 'spectrum_fakewild_8', true },
+        { 'spectrum_fakewild_8', true },
+        { 'spectrum_fakewild_8', true },
+        { 'spectrum_fakewild_8', true },
+    },
+    evaluate = function(parts)
+        if not SPECF.config.specflush then return {} end
+        if not next(parts._5) or not next(parts.spectrum_spectrum) or not next(parts._flush) then return {} end
+        return { SMODS.merge_lists (parts.spectrum_spectrum, parts._flush, parts._5) }
+    end,
+}
+
 local pokerhandinforef = G.FUNCS.get_poker_hand_info --Spectrum Six and so forth, copied from Cryptid
 function G.FUNCS.get_poker_hand_info(_cards)
 	local text, loc_disp_text, poker_hands, scoring_hand, disp_text = pokerhandinforef(_cards)
-    if #scoring_hand > 5 and (loc_disp_text == "Spectrum Five") then
+    if #scoring_hand > 5 and (loc_disp_text == "Spectrum Five" or loc_disp_text == "Specflush Five") then
+        loc_disp_text = (loc_disp_text == "Spectrum Five" and "Spectrum ") or (loc_disp_text == "Specflush Five" and "Specflush ") or loc_disp_text
         local rank_array = {}
         local county = 0
         for i = 1, #scoring_hand do
@@ -264,7 +349,7 @@ function G.FUNCS.get_poker_hand_info(_cards)
             end
             return str_ret
         end
-        loc_disp_text = "Spectrum "
+        loc_disp_text = loc_disp_text
             .. (
                 (county < 1000 and create_num_chunk(county) or "Thousand")
             )

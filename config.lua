@@ -1,6 +1,6 @@
 return {
     ["spectra_are_standard"] = false,
-    ["specflush"] = true,
+    ["specflush"] = false,
     ["smear_modded_suits"] = false,
     ["dev_messages"] = false,
     ["planet_design"] = {

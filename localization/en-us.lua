@@ -1,8 +1,5 @@
 return {
 	["misc"] = {
-		["suits_plural"] = {
-			["spectrum_fakewild"] = "fake wilds",
-		},
 		["poker_hands"] = {
 			["spectrum_Spectrum"] = "Spectrum",
 			["spectrum_Spectrum Five"] = "Spectrum Five",
@@ -31,9 +28,6 @@ return {
 			["paperback_Spectrum House"] = "Spectrum House (Paperback)",
 			["paperback_Straight Spectrum"] = "Straight Spectrum (Paperback)",
 			--]]
-		},
-		["suits_singular"] = {
-			["spectrum_fakewild"] = "fake wild",
 		},
 		["poker_hand_descriptions"] = {
 			["spectrum_Spectrum"] = {

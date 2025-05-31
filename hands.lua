@@ -108,7 +108,7 @@ SMODS.PokerHand{ -- Spectrum
         { 'S_2',    true },
         { 'D_7',    true },
         { 'C_3', true },
-        { 'spectrum_fakewild_5', true },
+        { 'C_5', true, enhancement = "m_wild" },
         { 'H_K',    true },
     },
     evaluate = function(parts)
@@ -125,7 +125,7 @@ SMODS.PokerHand{ -- Straight Spectrum
     l_mult = 5,
     example = {
         { 'S_Q',    true },
-        { 'spectrum_fakewild_J', true },
+        { 'H_J', true, enhancement = "m_wild" },
         { 'C_T',    true },
         { 'D_9', true },
         { 'H_8',    true }
@@ -160,7 +160,7 @@ SMODS.PokerHand{ -- Spectrum House
     l_mult = 5,
     example = {
         { 'S_Q',    true },
-        { 'spectrum_fakewild_Q', true },
+        { 'C_Q', true, enhancement = "m_wild" },
         { 'C_Q',    true },
         { 'D_8',    true },
         { 'H_8',    true }
@@ -180,11 +180,11 @@ SMODS.PokerHand{ -- Spectrum Five
     l_chips = 60,
     l_mult = 5,
     example = {
-        { 'S_7',    true },
+        { 'S_7', true },
         { 'D_7', true },
-        { 'spectrum_fakewild_7',    true },
-        { 'H_7',    true },
-        { 'C_7',    true }
+        { 'D_7', true, enhancement = "m_wild" },
+        { 'H_7', true },
+        { 'C_7', true }
     },
     evaluate = function(parts)
         if not next(parts._5) or not next(parts.spectrum_spectrum) then return {} end
@@ -201,10 +201,10 @@ SMODS.PokerHand{ -- Specflush
     l_mult = 5,
     example = {
         { 'S_2',    true },
-        { 'spectrum_fakewild_5', true },
-        { 'spectrum_fakewild_J', true },
-        { 'spectrum_fakewild_A', true },
-        { 'spectrum_fakewild_8', true },
+        { 'D_5', true, enhancement = "m_wild" },
+        { 'H_J', true, enhancement = "m_wild" },
+        { 'S_A', true, enhancement = "m_wild" },
+        { 'C_8', true, enhancement = "m_wild" },
     },
     evaluate = function(parts)
         if not SPECF.config.specflush then return {} end
@@ -222,10 +222,10 @@ SMODS.PokerHand{ -- Straight Specflush
     l_mult = 5,
     example = {
         { 'S_A',    true },
-        { 'spectrum_fakewild_2', true },
-        { 'spectrum_fakewild_3', true },
-        { 'spectrum_fakewild_4', true },
-        { 'spectrum_fakewild_5', true },
+        { 'H_2', true, enhancement = "m_wild" },
+        { 'H_3', true, enhancement = "m_wild" },
+        { 'C_4', true, enhancement = "m_wild" },
+        { 'C_5', true, enhancement = "m_wild" },
     },
     evaluate = function(parts)
         if not SPECF.config.specflush then return {} end
@@ -243,10 +243,10 @@ SMODS.PokerHand{ -- Specflush House
     l_mult = 5,
     example = {
         { 'S_A',    true },
-        { 'spectrum_fakewild_A', true },
-        { 'spectrum_fakewild_A', true },
-        { 'spectrum_fakewild_5', true },
-        { 'spectrum_fakewild_5', true },
+        { 'C_A', true, enhancement = "m_wild" },
+        { 'C_A', true, enhancement = "m_wild" },
+        { 'C_5', true, enhancement = "m_wild" },
+        { 'D_5', true, enhancement = "m_wild" },
     },
     evaluate = function(parts)
         if not SPECF.config.specflush then return {} end
@@ -264,10 +264,10 @@ SMODS.PokerHand{ -- Specflush Five
     l_mult = 5,
     example = {
         { 'S_8',    true },
-        { 'spectrum_fakewild_8', true },
-        { 'spectrum_fakewild_8', true },
-        { 'spectrum_fakewild_8', true },
-        { 'spectrum_fakewild_8', true },
+        { 'D_8', true, enhancement = "m_wild" },
+        { 'H_8', true, enhancement = "m_wild" },
+        { 'H_8', true, enhancement = "m_wild" },
+        { 'C_8', true, enhancement = "m_wild" },
     },
     evaluate = function(parts)
         if not SPECF.config.specflush then return {} end

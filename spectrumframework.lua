@@ -78,31 +78,6 @@ function Game:start_run(args)
     end
 end
 
-SMODS.Suit{ -- Fake wild card for the demonstration
-    key = 'fakewild',
-    card_key = 'fakewild',
-    hidden = true,
-    fake = true, --Other mods can reference this if they want to exclude fake suits for any reason. Which they probably should.
-
-    lc_atlas = 'fakewild_lc',
-    hc_atlas = 'fakewild_hc',
-
-    lc_ui_atlas = 'fakewild_icon',
-    hc_ui_atlas = 'fakewild_icon',
-
-    pos = { x = 0, y = 0 },
-    ui_pos = { x = 0, y = 0 },
-
-    lc_colour = HEX('86B723'),
-    hc_colour = HEX('86B723'),
-
-
-    in_pool = function(self, args)
-        return false
-    end
-}
-
-
 SMODS.Joker:take_ownership('smeared',{
     loc_vars = function(self)
         local key, vars
@@ -136,9 +111,6 @@ function Card:is_suit(suit, bypass_debuff, flush_calc)
         if (self.base.suit ~= 'Spades' and self.base.suit ~= 'Clubs' and self.base.suit ~= 'Hearts' and self.base.suit ~= 'Diamonds') and (suit ~= 'Spades' and suit ~= 'Clubs' and suit ~= 'Hearts' and suit ~= 'Diamonds')  then
             return true
         end
-    end
-    if suit == "spectrum_fakewild" and self.base.suit ~= "spectrum_fakewild" and not SMODS.has_any_suit(self) then
-        return false
     end
     return issuitref(self, suit, bypass_debuff, flush_calc)
 end

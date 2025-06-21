@@ -9,6 +9,7 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
   <summary>Config Options</summary>
 <ul>
 <li>Spectra are Standard: Default false. Forces lower-scoring values for Spectrum hands, and shows base Spectrum hand in Run Info immediately. Recommended if you are using many mods which add custom suits.</li>
+<li>Specflush hands:</li> Enable WIP hands containing both a Spectrum and a Flush
 <li>Smear modded suits: Default false. Modifies Smeared Joker to also make all modded suits count as each other. Recommended if you think this sounds like a fun idea.</li>
 <li>Dev messages: Sends trace-level dev messages to the console. If you don't know what this means, it's not relevant to you.</li>
 <li>Joker and Planet designs: Switch between CupertinoEffect's art, my original very silly doodles, or the art from <a href="https://github.com/Aurelius7309/SixSuits">Six Suits</a> and <a href="https://github.com/jumbocarrot0/Bunco">Bunco</a>. Y'know, in case you really like a specific version.</li>

@@ -195,6 +195,10 @@ SMODS.PokerHand{ -- Spectrum Five
 SMODS.PokerHand{ -- Specflush
     key = 'Specflush',
     visible = false,
+    planet = {
+        "c_jupiter",
+        "c_spectrum_Vulcan"
+    },
     chips = 75,
     mult = 10,
     l_chips = 35,
@@ -216,6 +220,10 @@ SMODS.PokerHand{ -- Specflush
 SMODS.PokerHand{ -- Straight Specflush
     key = 'Straight Specflush',
     visible = false,
+    planet = {
+        "c_neptune",
+        "c_spectrum_Phaeton"
+    },
     chips = 130,
     mult = 11,
     l_chips = 40,
@@ -237,6 +245,10 @@ SMODS.PokerHand{ -- Straight Specflush
 SMODS.PokerHand{ -- Specflush House
     key = 'Specflush House',
     visible = false,
+    planet = {
+        "c_ceres",
+        "c_spectrum_Nibiru"
+    },
     chips = 175,
     mult = 15,
     l_chips = 70,
@@ -258,6 +270,10 @@ SMODS.PokerHand{ -- Specflush House
 SMODS.PokerHand{ -- Specflush Five
     key = 'Specflush Five',
     visible = false,
+    planet = {
+        "c_eris",
+        "c_spectrum_Yuggoth"
+    },
     chips = 190,
     mult = 19,
     l_chips = 80,

@@ -64,24 +64,45 @@ end
 ---Checks if Spectrum hands are easy to score for any reason
 ---@return boolean
 SPECF.easy_spectra = function()
-    if SPECF.config.spectra_are_standard then
-        SPECF.say('Easy Spectra config option checked', "TRACE")
+    if G.GAME.spectrum_status then
+        return (G.GAME.spectrum_status == 1)
+    end
+    if SPECF.config.spectrum_status.current_option == 1 then
+        if G and G.GAME then
+            G.GAME.spectrum_status = 1
+        end
+        SPECF.say('Spectrum Score Status: Standard', "TRACE")
         return true
+    elseif SPECF.config.spectrum_status.current_option == 3 then
+        if G and G.GAME then
+            G.GAME.spectrum_status = 3
+        end
+        SPECF.say('Spectrum Score Status: Special', "TRACE")
+        return false
     end
     if G.GAME and G.GAME.starting_params.easy_spectra then
+        if G and G.GAME then
+            G.GAME.spectrum_status = 1
+        end
         SPECF.say('Deck defines Spectra as easy', "TRACE")
         return true
     end
     if SMODS.Mods.SixSuits and SMODS.Mods.SixSuits.can_load and SMODS.Mods.SixSuits.config.allow_all_suits then
+        if G and G.GAME then
+            G.GAME.spectrum_status = 1
+        end
         SPECF.say('SixSuits\'s all-suits config option checked', "TRACE")
         return true
     end
     if SMODS.Mods.draft and SMODS.Mods.draft.can_load then
         SPECF.say("Drafting", "TRACE")
         local count = 0
-        for _ in pairs(G.FUNCS.not_hidden_suits()) do count = count + 1 end
+        for _ in pairs(SPECF.in_pool_suits()) do count = count + 1 end
         SPECF.say("Count == "..count, "TRACE")
         if count > 5 then
+            if G and G.GAME then
+               G.GAME.spectrum_status = 1
+            end
             SPECF.say("Lots of suits", "TRACE")
             return true
         end
@@ -91,11 +112,16 @@ SPECF.easy_spectra = function()
     SPECF.say("Deck key: "..deckkey, "TRACE")
     SPECF.say("Forced enhancement: "..forceenhance, "TRACE")
     if deckkey == "b_cry_et_deck" and forceenhance == "m_wild" then --Force lower values for this deck because it counts out of order
+        if G and G.GAME then
+            G.GAME.spectrum_status = 1
+        end
         SPECF.say("Cryptid all-wild deck detected", "TRACE")
         return true
     end
     if G.GAME.starting_params.diverse_deck == nil then
-        SPECF.suit_diversity()
+        local diversity = SPECF.suit_diversity()
+        G.GAME.spectrum_status = diversity and 1 or 3
+        return diversity
     end
     --[[if G.GAME.starting_params.diverse_deck then
         SPECF.say('Deck detected as diverse.', "TRACE")
@@ -194,10 +220,8 @@ end
 SPECF.in_pool_suits = function ()
     local ret = {}
     for key, value in pairs(SMODS.Suits) do
-        if value.in_pool == nil or value:in_pool() then
-            if allow_exotic or not value.exotic then
-                ret[key] = value
-            end
+        if value.in_pool == nil or value:in_pool({}) then
+            ret[key] = value
         end
     end
     return ret
@@ -214,7 +238,7 @@ SPECF.reveal_hands = function (reverse)
             hand_data.visible = true
         end
     end
-    if reverse then 
+    if reverse then
         SPECF.say("Hidden hands unrevealed", "INFO ")
     else
         SPECF.say("All hands revealed", "INFO ")
@@ -234,6 +258,110 @@ SPECF.disable_exotics = function()
     if not G.GAME then return end
     G.GAME.Exotic = false
     SPECF.say('Attempted to disable Exotic System.', "TRACE")
+end
+
+---Levels Specflush hands to average of equivalent Spectrum and Flush hands
+---Called after calculating context.before, context.after, and context.using_consumeable
+SPECF.specflush_sync = function ()
+    if not SPECF.config.specflush then return end
+    local hands = {
+        "Specflush", "Straight Specflush", "Specflush House", "Specflush Five"
+    }
+    for _,specflush in ipairs(hands) do
+        local flush = string.gsub(specflush,"Specflush", "Flush")
+        local spec = string.gsub(specflush,"Specflush", "Spectrum")
+        local sflev = 0
+        local flev = 0
+        local slev = 0
+        for key, hand in pairs(G.GAME.hands) do
+            local level = to_number(hand.level)
+            --SPECF.say("Hand key is "..key, "TRACE")
+            if key == SPECF.prefix.."_"..specflush then
+                --SPECF.say(key.." is level "..level, "TRACE")
+                sflev = math.max(sflev,level)
+            end
+            if key == flush --[[All Flush hands are vanilla iirc and so won't have a prefix]] then
+                --SPECF.say(key.." is level "..level, "TRACE")
+                flev = math.max(flev,level)
+            end
+            if key:match("_"..spec.."$") then
+                --SPECF.say(key.." is level "..level, "TRACE")
+                slev = math.max(slev,level)
+            end
+        end
+        --SPECF.say("Levels calculated:", "TRACE")
+        --SPECF.say(flush.." is level "..flev, "TRACE")
+        --SPECF.say(spec.." is level "..slev, "TRACE")
+        --SPECF.say(specflush.." is level "..sflev, "TRACE")
+        local diff = math.ceil((slev+flev)/2 - sflev)
+        if diff > 0 then
+                SMODS.smart_level_up_hand(nil, SPECF.prefix..specflush, true, diff)
+        else
+            --SPECF.say("No imbalance found with "..flush.."+"..spec.." against "..specflush, "TRACE")
+        end
+    end
+
+    --G.GAME.hands[hand].level 
+end
+
+---Gets the planet associated with a hand.
+---Hands with a defined planet get that planet.
+---Specflush hands get the corresponding Spectrum or Flush planet at random.
+---Anything else gets a totally random planet.
+---@param hand string Key of the hand to check
+---@return string key Key of the selected planet card
+SPECF.getPlanet = function(hand)
+    hand = hand or G.GAME.last_hand_played
+    if not hand then return "c_mercury" end
+    local planet
+    if SMODS.PokerHand.obj_table[hand] and SMODS.PokerHand.obj_table[hand].planet then
+        if type(SMODS.PokerHand.obj_table[hand].planet) == "string" then
+            return SMODS.PokerHand.obj_table[hand].planet
+        elseif type(SMODS.PokerHand.obj_table[hand].planet) == "table" then
+            planet = pseudorandom_element(SMODS.PokerHand.obj_table[hand].planet, pseudoseed("handplanet"))
+            if type(planet) == "string" then
+                for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+                    if v.key == planet then
+                        return planet
+                    end
+                end
+            end
+        end
+    end
+    planet = nil
+
+    for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+        if v.config.hand_type == hand then
+            return v.key
+        end
+    end
+
+    local flush = hand:gsub("spectrum_", ""):gsub("Specflush", "Flush")
+    local spectrum = hand:gsub("Specflush", "Spectrum")
+    local flushplanet
+    local specplanet
+    for k, v in pairs(G.P_CENTER_POOLS.Planet) do
+        if v.config.hand_type == flush then
+            flushplanet = v.key
+        elseif v.config.hand_type == spectrum then
+            specplanet = v.key
+        end
+    end
+
+    if flushplanet and specplanet then
+        planet = pseudorandom_element({flushplanet, specplanet}, pseudoseed("get_specflush_planet"))
+    else
+        planet = pseudorandom_element(G.P_CENTER_POOLS.Planet, pseudoseed("get_random_planet")).key
+        local hand2 = G.P_CENTERS[planet] and G.P_CENTERS[planet].config and G.P_CENTERS[planet].config.hand_type
+        while not (G.GAME.hands[hand2] and G.GAME.hands[hand2].visible) do
+            local i = (i or 0)+1
+            planet = pseudorandom_element(G.P_CENTER_POOLS.Planet, pseudoseed("get_random_planet")).key
+            hand2 = G.P_CENTERS[planet] and G.P_CENTERS[planet].config.hand_type
+            if i > 100 then SPECF.say("getPlanet got stuck in a loop!", "ERROR") break end
+        end
+    end
+
+    return planet
 end
 
 --[[ This happens before the rest of the run-start stuff

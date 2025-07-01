@@ -1,0 +1,21 @@
+[manifest]
+version = "1.0.0"
+priority = 0
+
+# Pick a random Flush or Spectrum card if Pool Table triggers on a Specflush
+[[patches]]
+[patches.pattern]
+target = '=[SMODS paperback "content/joker/pool_table.lua"]'
+pattern = 'local card = create_card(card_type, G.consumeables, nil, nil, nil, nil, _planet, nil)'
+position = "before"
+payload = "if _planet == 0 then _planet = SPECF.getPlanet(G.GAME.last_hand_played) end"
+match_indent = true
+
+# ...and Sake Cup
+[[patches]]
+[patches.pattern]
+target = '=[SMODS paperback "content/joker/pool_table.lua"]'
+pattern = 'local planet = PB_UTIL.get_planet_for_hand(context.scoring_name)'
+position = "after"
+payload = "planet = planet or SPECF.getPlanet(G.GAME.last_hand_played)"
+match_indent = true

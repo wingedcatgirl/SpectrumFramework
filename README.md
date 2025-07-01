@@ -8,7 +8,7 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 <details>
   <summary>Config Options</summary>
 <ul>
-<li>Spectra are Standard: Default false. Forces lower-scoring values for Spectrum hands, and shows base Spectrum hand in Run Info immediately. Recommended if you are using many mods which add custom suits.</li>
+<li>Spectrum Score Status: Standard (always use lower chips+mult values and hand ranking), Situational (attempt to detect which values should be used based on starting deck), or Special (always use higher chips+mult values and hand ranking)</li>
 <li>Specflush hands:</li> Enable WIP hands containing both a Spectrum and a Flush
 <li>Smear modded suits: Default false. Modifies Smeared Joker to also make all modded suits count as each other. Recommended if you think this sounds like a fun idea.</li>
 <li>Dev messages: Sends trace-level dev messages to the console. If you don't know what this means, it's not relevant to you.</li>
@@ -43,5 +43,5 @@ The following mods implement Spectrum themself but ensure non-redundancy on thei
 - Paperback
 - Six Suits
 
-The following mod~~s~~ have not been tested for bugs or anything but will load alongside Spectrum Framework anyway, so [tell us](https://github.com/wingedcatgirl/SpectrumFramework/issues) and/or them if something weird happens:
+The following mod has not been _thoroughly_ tested, but we've tried working things out on our end, so [tell us](https://github.com/wingedcatgirl/SpectrumFramework/issues) if something weird happens:
 - Bunco

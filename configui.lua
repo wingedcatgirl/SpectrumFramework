@@ -10,11 +10,15 @@ SMODS.current_mod.config_tab = function()
         nodes = {
                     {n = G.UIT.C, config = {minw=0.5, minh=1, align = "tl", colour = G.C.CLEAR, padding = 0.15},
                     nodes = {
-                        create_toggle({
-                            label = "Spectra are standard",
+                        create_option_cycle {
+                            label = "Spectrum Score Status",
+                            options = {'Standard', 'Situational', 'Special'},
+                            current_option = SPECF.config.spectrum_status.current_option,
                             ref_table = SPECF.config,
-                            ref_value = 'spectra_are_standard',
-                                    }),
+                            ref_value = "spectrum_status",
+                            opt_callback = 'specf_artcycle',
+                            w = 5.5
+                            },
                         create_toggle({
                             label = "Specflush hand",
                             ref_table = SPECF.config,

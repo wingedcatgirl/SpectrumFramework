@@ -18,6 +18,9 @@ SMODS.load_file("jokers.lua")()
 to_big = to_big or function(x)
     return x
 end
+to_number = to_number or function(x)
+    return x
+end
 
 local GameStartRef = Game.start_run
 function Game:start_run(args)
@@ -26,7 +29,6 @@ function Game:start_run(args)
 
     if SPECF.easy_spectra() and not args.savetext then
         SPECF.say('Lowering hand values', "TRACE")
-        G.GAME.spectra_are_easy = true
         G.GAME.hands["spectrum_Spectrum"].visible = true
         local hand_adjustments = {
             ["spectrum_Spectrum"] = { mult = 3,  chips = 20,  l_mult = 3,  l_chips = 15 },
@@ -57,7 +59,7 @@ function Game:start_run(args)
     else
         if args.savetext then
             SPECF.say('Restoring saved run', "TRACE")
-            if G.GAME.spectra_are_easy then
+            if G.GAME.spectrum_status == 1 then
                 SPECF.reposition_modded_hands(G.handlist, {
                     ["spectrum_Spectrum Five"] = {name = "Five of a Kind", position = "above"},
                     ["spectrum_Spectrum House"] = {name = "Four of a Kind", position = "above"},

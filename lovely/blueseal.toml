@@ -1,0 +1,12 @@
+[manifest]
+version = "1.0.0"
+priority = 1
+
+# If blue seal triggers after specflush, pick a random Flush or Spectrum card
+[[patches]]
+[patches.pattern]
+target = "card.lua"
+pattern = 'if _planet == 0 then _planet = nil end'
+position = "after"
+payload = "_planet = _planet or SPECF.getPlanet(G.GAME.last_hand_played)"
+match_indent = true

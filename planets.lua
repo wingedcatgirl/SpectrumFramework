@@ -31,7 +31,7 @@ SMODS.Consumable{ -- Vulcan/Rainbow Planet
     end,
     in_pool = function()
         if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.spectrum_played()
+            return SPECF.easy_spectra() or SPECF.spectrum_played()
         end
         return true
     end,

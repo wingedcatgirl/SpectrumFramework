@@ -1,5 +1,8 @@
 return {
-    ["spectra_are_standard"] = false,
+    ["spectrum_status"] ={
+        current_option = 2,
+        option_value = "Situational",
+    },
     ["specflush"] = false,
     ["smear_modded_suits"] = false,
     ["dev_messages"] = false,

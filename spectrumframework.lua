@@ -14,6 +14,11 @@ SMODS.load_file("hands.lua")()
 SMODS.load_file("planets.lua")()
 SMODS.load_file("jokers.lua")()
 
+if not SMODS.current_mod.lovely then
+    NFS.write(SMODS.current_mod.path .. '.lovelyignore', '')
+    error("Spectrum Framework: Lovely patches failed! Please make sure the file structure is not nested. The mod will be automatically disabled on restart.")
+end
+
 --Talisman compatibility compatibility
 to_big = to_big or function(x)
     return x

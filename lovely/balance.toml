@@ -1,0 +1,21 @@
+[manifest]
+version = "1.0.0"
+priority = 1
+
+# Balance specflush hand levels before scoring
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '-- TARGET: effects before scoring starts'
+position = "after"
+payload = "SPECF.specflush_sync()"
+match_indent = true
+
+# ... and after
+[[patches]]
+[patches.pattern]
+target = "functions/state_events.lua"
+pattern = '-- TARGET: effects after hand evaluation'
+position = "after"
+payload = "SPECF.specflush_sync()"
+match_indent = true

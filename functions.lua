@@ -261,7 +261,7 @@ SPECF.disable_exotics = function()
 end
 
 ---Levels Specflush hands to average of equivalent Spectrum and Flush hands
----Called after calculating context.before, context.after, and context.using_consumeable
+---Called after calculating context.before and context.after (TODO maybe: add context.using_consumeable?)
 SPECF.specflush_sync = function ()
     if not SPECF.config.specflush then return end
     local hands = {
@@ -295,7 +295,7 @@ SPECF.specflush_sync = function ()
         --SPECF.say(specflush.." is level "..sflev, "TRACE")
         local diff = math.ceil((slev+flev)/2 - sflev)
         if diff > 0 then
-                SMODS.smart_level_up_hand(nil, SPECF.prefix..specflush, true, diff)
+                SMODS.smart_level_up_hand(nil, SPECF.prefix.."_"..specflush, true, diff)
         else
             --SPECF.say("No imbalance found with "..flush.."+"..spec.." against "..specflush, "TRACE")
         end

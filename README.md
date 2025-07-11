@@ -8,7 +8,7 @@ Also allows Smeared Joker to make all modded suits count as the same suit, if yo
 <details>
   <summary>Config Options</summary>
 <ul>
-<li>Spectrum Score Status: Standard (always use lower chips+mult values and hand ranking), Situational (attempt to detect which values should be used based on starting deck), or Special (always use higher chips+mult values and hand ranking)</li>
+<li>Spectrum Score Status: Standard (always use lower chips+mult values and hand ranking), Situational (default; attempt to detect which values should be used based on starting deck), or Special (always use higher chips+mult values and hand ranking)</li>
 <li>Specflush hands:</li> Enable WIP hands containing both a Spectrum and a Flush
 <li>Smear modded suits: Default false. Modifies Smeared Joker to also make all modded suits count as each other. Recommended if you think this sounds like a fun idea.</li>
 <li>Dev messages: Sends trace-level dev messages to the console. If you don't know what this means, it's not relevant to you.</li>

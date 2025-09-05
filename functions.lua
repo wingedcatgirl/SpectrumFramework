@@ -364,6 +364,12 @@ SPECF.getPlanet = function(hand)
     return planet
 end
 
+SMODS.current_mod.calculate = function (self, context)
+    if context.before or context.after or context.using_consumeable then
+        SPECF.specflush_sync()
+    end
+end
+
 --[[ This happens before the rest of the run-start stuff
 function SMODS.current_mod.reset_game_globals(start)
     

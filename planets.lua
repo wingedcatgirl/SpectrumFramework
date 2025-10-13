@@ -30,10 +30,7 @@ SMODS.Consumable{ -- Vulcan/Rainbow Planet
         end
     end,
     in_pool = function()
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.easy_spectra() or SPECF.spectrum_played()
-        end
-        return true
+        return SPECF.easy_spectra() or SPECF.spectrum_played()
     end,
 	loc_vars = function(self, info_queue, card)
         local key = self.key
@@ -126,10 +123,7 @@ SMODS.Consumable{ -- Nibiru/House Planet
         end
     end,
     in_pool = function()
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.spectrum_played()
-        end
-        return true
+        return SPECF.spectrum_played()
     end,
 	loc_vars = function(self, info_queue, card)
         local key = self.key
@@ -222,10 +216,7 @@ SMODS.Consumable{ -- Phaeton/Line Planet
         end
     end,
     in_pool = function()
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.spectrum_played()
-        end
-        return true
+        return SPECF.spectrum_played()
     end,
 	loc_vars = function(self, info_queue, card)
         local key = self.key
@@ -319,10 +310,7 @@ SMODS.Consumable{ -- Yuggoth/Planet Cluster
         end
     end,
     in_pool = function()
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.spectrum_played()
-        end
-        return true
+        return SPECF.spectrum_played()
     end,
 	loc_vars = function(self, info_queue, card)
         local key = self.key

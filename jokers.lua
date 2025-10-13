@@ -15,10 +15,7 @@ SMODS.Joker {
     blueprint_compat = true,
     config =  { extra = {chips = 90}},
     in_pool = function()
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.spectrum_played()
-        end
-        return true
+        return SPECF.easy_spectra() or SPECF.spectrum_played()
     end,
     loc_vars = function(self, info_queue, card)
         local key = self.key
@@ -105,10 +102,7 @@ SMODS.Joker {
     blueprint_compat = true,
     config =  { extra = {mult = 11}},
     in_pool = function()
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.spectrum_played()
-        end
-        return true
+        return SPECF.easy_spectra() or SPECF.spectrum_played()
     end,
     loc_vars = function(self, info_queue, card)
         local key = self.key
@@ -196,10 +190,7 @@ SMODS.Joker {
     blueprint_compat = true,
     config =  { extra = {Xmult = 2.5}},
     in_pool = function()
-        if (SMODS.Mods["Bunco"] or {}).can_load then
-            return SPECF.spectrum_played()
-        end
-        return true
+        return SPECF.easy_spectra() or SPECF.spectrum_played()
     end,
     loc_vars = function(self, info_queue, card)
         local key = self.key

@@ -53,39 +53,28 @@ SMODS.PokerHandPart{ -- Spectrum base
             return {all_cards}
         end
 
-        -- need to find (needed) more unique suits from flex cards
-        local all_suits = {}
-        for _, suit in ipairs(SMODS.Suit.obj_buffer) do
-            if not locked_suits[suit] then
-                table.insert(all_suits, suit)
-            end
-        end
-
-        local function assign(i, used_cards, assigned_suits)
-            if i > needed then return true end
-            local suit = all_suits[i]
-
-            for j, flex in ipairs(flex_cards) do
-                if not used_cards[j] then
-                    for _, s in ipairs(flex.suits) do
-                        if s == suit then
-                            used_cards[j] = true
-                            assigned_suits[suit] = true
-                            if assign(i + 1, used_cards, assigned_suits) then
-                                return true
-                            end
-                            used_cards[j] = false
-                            assigned_suits[suit] = nil
-                            break
-                        end
+        local suit_owner = {}
+        local function try_match(j, seen)
+            for _, s in ipairs(flex_cards[j].suits) do
+                if not locked_suits[s] and not seen[s] then
+                    seen[s] = true
+                    if not suit_owner[s] or try_match(suit_owner[s], seen) then
+                        suit_owner[s] = j
+                        return true
                     end
                 end
             end
-
             return false
         end
 
-        if needed <= #flex_cards and assign(1, {}, {}) then
+        local matched = 0
+        for j = 1, #flex_cards do
+            if try_match(j, {}) then
+                matched = matched + 1
+            end
+        end
+
+        if matched + #wild_cards >= needed then
             local all_cards = {}
             for _, c in ipairs(locked_cards) do table.insert(all_cards, c) end
             for _, f in ipairs(flex_cards) do table.insert(all_cards, f.card) end
